@@ -1,0 +1,39 @@
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fafafa;
+      color: #333;
+    }
+    .hero {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      padding: 3rem 0;
+    }
+    .hero h1 {
+      font-weight: 700;
+    }
+    .article-content {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      padding: 2.5rem;
+      margin-top: -2rem;
+      position: relative;
+    }
+    .highlight-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid #2a5298;
+      padding: 1.2rem;
+      margin: 2rem 0;
+    }
+    .check-list li {
+      margin-bottom: 0.6rem;
+    }
+    footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      background-color: #f1f5f9;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+ 

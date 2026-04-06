@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetailMind 360° | Compite como los Gigantes</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+        header { background: #001f3f; color: white; text-align: center; }
+        .hero-img { width: 50%; max-height: 500px; object-fit: cover; }
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+        h1, h2 { color: #004080; }
+        .intro { font-size: 1.2em; font-style: italic; text-align: center; margin: 40px 0; }
+        
+        /* Sección de Comparativa Visual */
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 60px 0; }
+        .comparison-card { background: #f9f9f9; padding: 20px; border-radius: 8px; border-top: 5px solid #ccc; }
+        .comparison-card.solution { border-top-color: #007bff; background: #f0f7ff; }
+        .comparison-card img { width: 100%; border-radius: 4px; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
+        .stat-item { text-align: center; padding: 20px; background: #eee; border-radius: 10px; }
+        .stat-item b { font-size: 1.5em; color: #007bff; display: block; }
+
+        .cta-section { background: #004080; color: white; padding: 50px; text-align: center; border-radius: 15px; }
+        .btn { background: #ff6600; color: white; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block; margin-top: 20px; }
+        
+        @media (max-width: 768px) { .comparison-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="./imagenes/Compite como los gigantes 0000.png" alt="RetailMind 360 - Compite como los gigantes" class="hero-img">
+</header>
+
+<div class="container">
+    <section class="intro">
+        <h1>Los grandes no siempre fueron grandes...</h1>
+        <p>Y usted no tiene por qué ser pequeño para siempre. ¿Qué pasaría si su cadena de 10 tiendas pudiera decidir con la misma precisión que Walmart o Amazon sin su presupuesto millonario?</p>
+    </section>
+
+    <hr>
+
+    <section class="comparison-grid">
+        <div class="comparison-card">
+            <h2>El Enfoque Manual</h2>
+            <img src="./imagenes/carrito Excel (Manualmente).png" alt="Operación Manual con Excel">
+            <p><strong>El problema de las "piezas sueltas":</strong></p>
+            <ul>
+                <li><b>Silos de información:</b> Ventas no habla con compras; Logística opera a ciegas.</li>
+                <li><b>Retrabajo infinito:</b> Su equipo gasta el 80% del tiempo limpiando excels y solo el 20% analizando.</li>
+                <li><b>Soluciones frágiles:</b> Los desarrollos "in-house" en Python dependen de una persona y no escalan.</li>
+                <li><b>Decisiones tardías:</b> Cuando descubre un problema, la pérdida ya ocurrió.</li>
+            </ul>
+        </div>
+
+        <div class="comparison-card solution">
+            <h2>Como los Grandes</h2>
+            <img src="./imagenes/Como los Grandes.png" alt="Operación con RetailMind 360">
+            <p><strong>Inteligencia de Clase Mundial:</strong></p>
+            <ul>
+                <li><b>Estructura lista para rodar:</b> Datamarts y ETLs automáticos que ordenan su data diariamente.</li>
+                <li><b>Plataformas Líderes:</b> Visualice su negocio en Power BI o IBM Cognos Analytics with Watson.</li>
+                <li><b>Visión 360°:</b> Conecte tickets, inventario y logística en un solo tablero dinámico.</li>
+                <li><b>Acción Proactiva:</b> Alertas de obsolescencia y rotura de stock antes de que afecten el flujo de caja.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>RetailMind 360°: Su ventaja competitiva</h2>
+        <p>A diferencia de las plataformas de Business Intelligence genéricas, RetailMind 360° está diseñada desde cero para resolver los desafíos únicos del sector retail en el contexto venezolano.</p>
+        
+        <div class="stats-grid">
+            <div class="stat-item"><b>15-20%</b> Incremento en Ticket Promedio</div>
+            <div class="stat-item"><b>14 días</b> Para obtener los primeros insights</div>
+            <div class="stat-item"><b>-40%</b> En mermas y obsolescencia</div>
+            <div class="stat-item"><b>3-4 semanas</b> Tiempo de implementación completa</div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Experticia de Gigante, Presupuesto de Retailer</h2>
+        <p>Tenemos la experiencia trabajando para los grandes y la pasión para ayudar a las cadenas medianas a diferenciarse. Nuestra solución es agnóstica: implantamos con <b>Power BI</b> o <b>IBM Cognos</b> a bajo costo y en tiempo récord.</p>
+        <p>No necesita ser grande para pensar como uno.</p>
+        <a href="#" class="btn">SOLICITAR DEMO GRATUITA</a>
+    </section>
+
+    <footer style="text-align: center; margin-top: 50px; font-size: 0.9em; color: #666;">
+        <p>© 2026 RetailMind 360° - Hecho en Venezuela. Pensado para el mundo.</p>
+    </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetailMind 360° | Tablero de Telemetría para Supermercados</title>
+    <meta name="description" content="Convierta la percepción en medición real. RetailMind 360° le da control total sobre su ciclo operativo en entornos de alta fricción.">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Paleta RetailMind - Telemetría */
+            --rm-dark: #0a0e17;
+            --rm-darker: #05070a;
+            --rm-blue: #00d4aa;
+            --rm-blue-glow: rgba(0, 212, 170, 0.4);
+            --rm-orange: #ff6b35;
+            --rm-orange-glow: rgba(255, 107, 53, 0.3);
+            --rm-gray: #64748b;
+            --rm-light: #f1f5f9;
+            --rm-card-bg: rgba(15, 23, 42, 0.8);
+            --rm-border: rgba(100, 116, 139, 0.2);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--rm-dark);
+            color: var(--rm-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Tipografía técnica para datos */
+        .tech-font {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+        
+        /* Header / Navbar */
+        .navbar {
+            background: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--rm-border);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+        
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 5rem 0 3rem;
+            background: 
+                radial-gradient(ellipse at top, rgba(0, 212, 170, 0.1) 0%, transparent 70%),
+                radial-gradient(ellipse at bottom right, rgba(255, 107, 53, 0.08) 0%, transparent 70%),
+                linear-gradient(180deg, var(--rm-dark) 0%, var(--rm-darker) 100%);
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--rm-blue), transparent);
+            animation: scanline 3s linear infinite;
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(1000%); }
+        }
+        
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--rm-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--rm-gray);
+            margin-bottom: 2.5rem;
+            max-width: 650px;
+        }
+        
+        .hero-image {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--rm-border);
+            box-shadow: 
+                0 0 0 1px var(--rm-border),
+                0 20px 50px -20px rgba(0, 0, 0, 0.5),
+                0 0 60px var(--rm-blue-glow);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        .hero-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 0 0 1px var(--rm-blue),
+                0 30px 60px -20px rgba(0, 212, 170, 0.3),
+                0 0 80px var(--rm-blue-glow);
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .hero-image:hover img {
+            transform: scale(1.02);
+        }
+        
+        /* Overlay de telemetría en la imagen */
+        .telemetry-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(10, 14, 23, 0.9);
+            border: 1px solid var(--rm-blue);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            backdrop-filter: blur(4px);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 var(--rm-blue-glow); }
+            50% { box-shadow: 0 0 0 8px transparent; }
+        }
+        
+        .telemetry-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        
+        .telemetry-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .telemetry-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--rm-blue);
+            animation: blink 1.5s ease-in-out infinite;
+        }
+        
+        .telemetry-dot.warning {
+            background: var(--rm-orange);
+            animation-delay: 0.5s;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        
+        /* Botones */
+        .btn-retailmind {
+            background: linear-gradient(135deg, var(--rm-blue) 0%, #00a885 100%);
+            color: var(--rm-dark);
+            border: none;
+            padding: 14px 32px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px var(--rm-blue-glow);
+        }
+        
+        .btn-retailmind:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--rm-blue-glow);
+            color: var(--rm-dark);
+        }
+        
+        .btn-retailmind::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-retailmind:hover::before {
+            left: 100%;
+        }
+        
+        .btn-outline-retailmind {
+            background: transparent;
+            color: var(--rm-blue);
+            border: 2px solid var(--rm-blue);
+            padding: 12px 28px;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-retailmind:hover {
+            background: var(--rm-blue);
+            color: var(--rm-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* Secciones */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--rm-blue);
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            color: var(--rm-gray);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            max-width: 700px;
+        }
+        
+        /* Reality Check Section */
+        .reality-check {
+            background: linear-gradient(180deg, var(--rm-darker) 0%, var(--rm-dark) 100%);
+            border-top: 1px solid var(--rm-border);
+            border-bottom: 1px solid var(--rm-border);
+        }
+        
+        .check-card {
+            background: var(--rm-card-bg);
+            border: 1px solid var(--rm-border);
+            border-radius: 16px;
+            padding: 2rem;
+            height: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .check-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--rm-orange), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .check-card:hover {
+            border-color: var(--rm-orange);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -20px rgba(255, 107, 53, 0.2);
+        }
+        
+        .check-card:hover::before {
+            opacity: 1;
+        }
+        
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 1rem 0;
+            border-bottom: 1px dashed var(--rm-border);
+        }
+        
+        .check-item:last-child {
+            border-bottom: none;
+        }
+        
+        .check-icon {
+            color: var(--rm-orange);
+            font-size: 1.25rem;
+            min-width: 24px;
+            margin-top: 3px;
+        }
+        
+        .check-text {
+            color: var(--rm-light);
+            font-weight: 500;
+        }
+        
+        .impact-box {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid var(--rm-orange);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .impact-box i {
+            color: var(--rm-orange);
+            margin-right: 8px;
+        }
+        
+        /* Solution Section */
+        .solution {
+            background: var(--rm-dark);
+        }
+        
+        .feature-card {
+            background: var(--rm-card-bg);
+            border: 1px solid var(--rm-border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            height: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .feature-card:hover {
+            border-color: var(--rm-blue);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -20px var(--rm-blue-glow);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.75rem;
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.15) 0%, rgba(0, 212, 170, 0.05) 100%);
+            border: 1px solid var(--rm-blue);
+            color: var(--rm-blue);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            background: linear-gradient(135deg, var(--rm-blue) 0%, #00a885 100%);
+            color: var(--rm-dark);
+            transform: scale(1.1);
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: #fff;
+        }
+        
+        .feature-desc {
+            color: var(--rm-gray);
+            font-size: 0.95rem;
+        }
+        
+        .telemetry-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 212, 170, 0.15);
+            color: var(--rm-blue);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            border: 1px solid var(--rm-blue);
+        }
+        
+        /* Benefit Section */
+        .benefit {
+            background: linear-gradient(180deg, var(--rm-dark) 0%, var(--rm-darker) 100%);
+            text-align: center;
+        }
+        
+        .benefit-box {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem;
+            background: var(--rm-card-bg);
+            border: 1px solid var(--rm-border);
+            border-radius: 20px;
+            position: relative;
+        }
+        
+        .benefit-box::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--rm-blue), var(--rm-orange), var(--rm-blue));
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: gradientRotate 4s linear infinite;
+        }
+        
+        @keyframes gradientRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .benefit-text {
+            font-size: 1.25rem;
+            color: var(--rm-light);
+            margin-bottom: 2rem;
+        }
+        
+        .direction-cards {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .direction-card {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .direction-advance {
+            background: rgba(0, 212, 170, 0.1);
+            border: 1px solid var(--rm-blue);
+        }
+        
+        .direction-brake {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid var(--rm-orange);
+        }
+        
+        .direction-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .direction-advance .direction-icon {
+            color: var(--rm-blue);
+        }
+        
+        .direction-brake .direction-icon {
+            color: var(--rm-orange);
+        }
+        
+        .direction-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+        
+        .direction-desc {
+            color: var(--rm-gray);
+            font-size: 0.9rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: 
+                radial-gradient(ellipse at center, rgba(0, 212, 170, 0.15) 0%, transparent 70%),
+                var(--rm-darker);
+            border-top: 1px solid var(--rm-border);
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-subtitle {
+            color: var(--rm-gray);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--rm-card-bg);
+            border: 1px solid var(--rm-border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        
+        .form-control {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--rm-border);
+            color: var(--rm-light);
+            padding: 14px 16px;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            background: rgba(15, 23, 42, 0.95);
+            border-color: var(--rm-blue);
+            box-shadow: 0 0 0 3px var(--rm-blue-glow);
+            color: var(--rm-light);
+        }
+        
+        .form-control::placeholder {
+            color: var(--rm-gray);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--rm-light);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--rm-darker);
+            border-top: 1px solid var(--rm-border);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--rm-gray);
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: var(--rm-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: var(--rm-light);
+        }
+        
+        /* Animaciones de entrada */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 4rem 0 2rem;
+                text-align: center;
+            }
+            
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .direction-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-form {
+                padding: 1.5rem;
+            }
+            
+            section {
+                padding: 4rem 0;
+            }
+        }
+        
+        /* Utilidades */
+        .text-blue { color: var(--rm-blue) !important; }
+        .text-orange { color: var(--rm-orange) !important; }
+        .bg-card { background: var(--rm-card-bg) !important; }
+        .border-glow-blue { 
+            border-color: var(--rm-blue) !important; 
+            box-shadow: 0 0 20px var(--rm-blue-glow) !important; 
+        }
+        .border-glow-orange { 
+            border-color: var(--rm-orange) !important; 
+            box-shadow: 0 0 20px var(--rm-orange-glow) !important; 
+        }
+        
+        /* Badge de contexto Venezuela */
+        .venezuela-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 107, 53, 0.15);
+            color: var(--rm-orange);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--rm-orange);
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://demo.lat/logos/logo_retailmind_largo_transparente_197x40.png" alt="RetailMind 360° Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#reality-check">Reality Check</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#solution">Telemetría</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#benefit">Beneficios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-retailmind btn-sm" href="#cta">
+                            <i class="fas fa-play-circle"></i> Demo Gratuita
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center gy-5">
+                <div class="col-lg-6 fade-in-up">
+                    <span class="venezuela-badge">
+                        <i class="fas fa-chart-line"></i> Optimizado para el contexto venezolano
+                    </span>
+                    <h1 class="hero-title">¿Su Rueda Operativa Avanza o Solo Gira?</h1>
+                    <p class="hero-subtitle">
+                        No confíe en su percepción. Instale el Tablero de Telemetría para su supermercado. 
+                        En un entorno de alta fricción (diferencial y comisiones), lo que no se mide en tiempo real, 
+                        se pierde en descapitalización.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#cta" class="btn btn-retailmind">
+                            <i class="fas fa-tachometer-alt"></i> Solicitar Demo
+                        </a>
+                        <a href="#solution" class="btn btn-outline-retailmind">
+                            <i class="fas fa-info-circle"></i> Cómo Funciona
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 fade-in-up">
+                    <div class="hero-image">
+                        <img src="https://demo.lat/imagenes/dashboard-qwen.png" alt="RetailMind 360° Dashboard - Tablero de Telemetría">
+                        <div class="telemetry-overlay tech-font">
+                            <div class="telemetry-item">
+                                <div class="telemetry-dot"></div>
+                                <span>Velocidad: <strong class="text-blue">94.2 RPM</strong></span>
+                            </div>
+                            <div class="telemetry-item">
+                                <div class="telemetry-dot warning"></div>
+                                <span>Fricción: <strong class="text-orange">12.4%</strong></span>
+                            </div>
+                            <div class="telemetry-item">
+                                <div class="telemetry-dot"></div>
+                                <span>Margen: <strong class="text-blue">+8.7%</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reality Check Section -->
+    <section id="reality-check" class="reality-check">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center fade-in-up">
+                    <h2 class="section-title">Prueba de Granularidad Crítica</h2>
+                    <p class="section-subtitle">
+                        Sea honesto. ¿Puede responder esto ahora mismo?
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4 fade-in-up">
+                    <div class="check-card">
+                        <div class="check-item">
+                            <i class="fas fa-times-circle check-icon"></i>
+                            <p class="check-text">¿Producto más rotativo en las últimas <strong>72 horas</strong> por sucursal?</p>
+                        </div>
+                        <div class="check-item">
+                            <i class="fas fa-times-circle check-icon"></i>
+                            <p class="check-text">¿Margen neto <strong>REAL</strong> (post-devaluación) del turno de tarde de ayer?</p>
+                        </div>
+                        <div class="check-item">
+                            <i class="fas fa-times-circle check-icon"></i>
+                            <p class="check-text">¿Día de la semana con <strong>mezcla de pagos</strong> más ineficiente?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 fade-in-up">
+                    <div class="check-card h-100 d-flex flex-column justify-content-center align-items-center text-center">
+                        <i class="fas fa-brain fa-3x text-orange mb-3"></i>
+                        <h5 class="text-orange fw-bold mb-2">Disonancia Cognitiva</h5>
+                        <p class="text-muted small mb-0">
+                            Si respondió "Sí, yo lo sé todo", entonces expliquemos los síntomas...
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 fade-in-up">
+                    <div class="impact-box">
+                        <p class="mb-2">
+                            <i class="fas fa-exclamation-triangle"></i> 
+                            <strong>Si dudó, tiene:</strong>
+                        </p>
+                        <ul class="list-unstyled mb-0 small">
+                            <li><i class="fas fa-box-open text-orange me-2"></i>Productos "hueso" ocupando espacio</li>
+                            <li><i class="fas fa-exclamation-circle text-orange me-2"></i>Quiebres de stock en productos estrella</li>
+                            <li><i class="fas fa-calendar-times text-orange me-2"></i>Merma por caducidad en su balance</li>
+                        </ul>
+                        <p class="mt-3 mb-0 fw-bold text-orange">
+                            <i class="fas fa-cogs me-1"></i> Eso es fricción comiendo su ganancia.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="solution">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center fade-in-up">
+                    <h2 class="section-title">Instale Sensores en su Ciclo Operativo</h2>
+                    <p class="section-subtitle">
+                        RetailMind no es la rueda, es el tablero que le dice <strong>cómo gira</strong>.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4 fade-in-up">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h4 class="feature-title">Velocidad Angular</h4>
+                        <p class="feature-desc">
+                            Ritmo real de movimiento por SKU. Sepa exactamente qué productos se mueven, 
+                            cuándo y a qué velocidad en cada punto de venta.
+                        </p>
+                        <span class="telemetry-badge">
+                            <i class="fas fa-bolt"></i> Tiempo Real
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 fade-in-up">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-oil-can"></i>
+                        </div>
+                        <h4 class="feature-title">Control de Desgaste</h4>
+                        <p class="feature-desc">
+                            Detecte cuánta ganancia se queda en la fricción de los puntos de venta: 
+                            merma, comisiones, errores de precio, quiebres.
+                        </p>
+                        <span class="telemetry-badge">
+                            <i class="fas fa-shield-alt"></i> Alertas Proactivas
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 fade-in-up">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h4 class="feature-title">Equilibrio Operativo</h4>
+                        <p class="feature-desc">
+                            Alinee ventas con reposición real. Evite la descapitalización asegurando 
+                            que cada giro de la rueda genere capital, no solo movimiento.
+                        </p>
+                        <span class="telemetry-badge">
+                            <i class="fas fa-sync-alt"></i> Ciclo Cerrado
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5 fade-in-up">
+                <p class="text-muted mb-4">
+                    <i class="fas fa-info-circle text-blue me-2"></i>
+                    <strong>Lo que no se mide, no se controla. Lo que no se controla, se pierde.</strong>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefit Section -->
+    <section id="benefit" class="benefit">
+        <div class="container">
+            <div class="benefit-box fade-in-up">
+                <h3 class="mb-4">Dirección Correcta</h3>
+                <p class="benefit-text">
+                    Asegure que su rueda gire para <strong class="text-blue">avanzar (reposición de capital)</strong> 
+                    y no para <strong class="text-orange">frenar (pérdida de liquidez)</strong>. 
+                    Tome decisiones basadas en medición real, no en intuición.
+                </p>
+                
+                <div class="direction-cards">
+                    <div class="direction-card direction-advance">
+                        <div class="direction-icon">
+                            <i class="fas fa-arrow-circle-up"></i>
+                        </div>
+                        <h5 class="direction-title">Girar para Avanzar</h5>
+                        <p class="direction-desc">
+                            Ventas que generan margen real, reposición inteligente, capital que crece.
+                        </p>
+                    </div>
+                    <div class="direction-card direction-brake">
+                        <div class="direction-icon">
+                            <i class="fas fa-stop-circle"></i>
+                        </div>
+                        <h5 class="direction-title">Girar para Frenar</h5>
+                        <p class="direction-desc">
+                            Movimiento contable sin utilidad, inventario estancado, descapitalización silenciosa.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta-section">
+        <div class="container">
+            <div class="fade-in-up">
+                <h3 class="cta-title">Deje de operar a ciegas</h3>
+                <p class="cta-subtitle">
+                    Descubra su Velocidad Angular y Desgaste real hoy mismo. 
+                    Sin compromiso, sin instalación compleja.
+                </p>
+                
+                <form class="cta-form" id="demoForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre Completo</label>
+                        <input type="text" class="form-control" id="name" placeholder="Ej: Carlos Méndez" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Corporativo</label>
+                        <input type="email" class="form-control" id="email" placeholder="carlos@supermercado.com" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="company" class="form-label">Empresa / Sucursales</label>
+                        <input type="text" class="form-control" id="company" placeholder="Ej: Supermercados La Vega - 3 sucursales">
+                    </div>
+                    <button type="submit" class="btn btn-retailmind w-100">
+                        <i class="fas fa-rocket"></i> Solicitar Demo del Tablero de Telemetría
+                    </button>
+                    <p class="text-muted small mt-3 mb-0">
+                        <i class="fas fa-lock me-1"></i> Sus datos están seguros. No enviamos spam.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row gy-3 align-items-center">
+                <div class="col-md-6 text-md-start">
+                    <img src="https://demo.lat/logos/logo_retailmind_largo_transparente_197x40.png" alt="RetailMind 360°" style="height: 30px; opacity: 0.9;">
+                    <p class="mb-0 mt-2">© 2026 RetailMind 360°. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="me-3"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                    <a href="#"><i class="fas fa-envelope"></i> contacto@retailmind360.com</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS + jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            
+            // Animación de entrada al hacer scroll
+            function checkFadeIn() {
+                $('.fade-in-up').each(function() {
+                    var elementTop = $(this).offset().top;
+                    var viewportBottom = $(window).scrollTop() + $(window).height() * 0.85;
+                    
+                    if (elementTop < viewportBottom) {
+                        $(this).addClass('visible');
+                    }
+                });
+            }
+            
+            // Ejecutar al cargar y al hacer scroll
+            $(window).on('load scroll', checkFadeIn);
+            checkFadeIn(); // Primera ejecución
+            
+            // Smooth scroll para enlaces internos
+            $('a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                var target = $(this.getAttribute('href'));
+                if (target.length) {
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - 80
+                    }, 600);
+                }
+            });
+            
+            // Efecto hover en navbar al hacer scroll
+            $(window).on('scroll', function() {
+                if ($(this).scrollTop() > 50) {
+                    $('.navbar').addClass('shadow-sm');
+                } else {
+                    $('.navbar').removeClass('shadow-sm');
+                }
+            });
+            
+            // Validación y envío del formulario
+            $('#demoForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                // Obtener datos
+                var name = $('#name').val();
+                var email = $('#email').val();
+                var company = $('#company').val();
+                
+                // Simular envío (aquí iría tu backend)
+                var btn = $(this).find('button[type="submit"]');
+                var originalText = btn.html();
+                
+                btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Enviando...');
+                
+                setTimeout(function() {
+                    // Éxito simulado
+                    alert('¡Gracias, ' + name + '! Hemos recibido tu solicitud. Un especialista de RetailMind 360° se contactará contigo en menos de 24 horas para agendar tu demo personalizada.');
+                    
+                    // Resetear formulario
+                    $('#demoForm')[0].reset();
+                    btn.prop('disabled', false).html(originalText);
+                    
+                    // Scroll suave al hero
+                    $('html, body').animate({ scrollTop: 0 }, 500);
+                }, 1500);
+            });
+            
+            // Efecto parallax sutil en la imagen del hero
+            $(window).on('mousemove', function(e) {
+                var xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+                var yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+                $('.hero-image').css('transform', `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`);
+            });
+            
+            // Resetear transform al salir del mouse
+            $('.hero').on('mouseleave', function() {
+                $('.hero-image').css('transform', 'rotateY(0deg) rotateX(0deg)');
+            });
+            
+            // Counter animation para los números de telemetría (efecto visual)
+            function animateValue(element, start, end, duration, prefix = '', suffix = '') {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const value = Math.floor(progress * (end - start) + start);
+                    element.textContent = prefix + value + suffix;
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+            
+            // Iniciar animación cuando la sección de telemetría sea visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Aquí podrías animar números reales si los tuvieras
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            document.querySelectorAll('.feature-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
