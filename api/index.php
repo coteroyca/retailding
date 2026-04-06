@@ -138,7 +138,7 @@ foreach ($folders as $folder) {
                 <div class="text-center mb-5 position-relative">
                     <h1 class="display-4 text-white fw-bold mb-3">
                         <i class="fas fa-folder-tree me-3"></i>
-                        Gestor de Archivos
+                        Gestor de Archivos (API)
                     </h1>
                     <p class="lead text-white-50 mb-2">JSONs actualizados automáticamente</p>
                     <span class="badge bg-success status-badge">
