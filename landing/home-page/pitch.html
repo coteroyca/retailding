@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RetailMind 360° | Compite como los gigantes del retail</title>
+  <style>
+    /* Reset básico y tipografía */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Inter, Montserrat, sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background-color: #f9fafb;
+    }
+    h1, h2, h3 {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #1e293b;
+    }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; margin-top: 3rem; }
+    p { margin-bottom: 1rem; }
+    a { text-decoration: none; }
+
+    /* Contenedor principal */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
+      color: white;
+      padding: 3rem 0;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      color: white;
+    }
+    header p {
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    /* Secciones */
+    section {
+      padding: 3rem 0;
+    }
+    .highlight {
+      background-color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .feature-card {
+      background: #f0f9ff;
+      padding: 1.5rem;
+      border-left: 4px solid #0ea5e9;
+      border-radius: 8px;
+    }
+
+    /* CTA */
+    .cta {
+      background: #fffbeb;
+      border: 2px solid #f59e0b;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      border-radius: 12px;
+      margin: 3rem 0;
+    }
+    .cta h2 {
+      color: #92400e;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #f97316;
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background-color: #ea580c;
+    }
+
+    /* Testimonios */
+    .testimonial {
+      font-style: italic;
+      padding: 1.5rem;
+      background: #f0fdf4;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+
+    /* FAQ */
+    .faq-item {
+      margin-bottom: 1.5rem;
+    }
+    .faq-item h3 {
+      color: #0f766e;
+    }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    /* Mobile-first */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.75rem; }
+      header { padding: 2rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <h1>RetailMind 360°</h1>
+      <p>Compite como los gigantes del retail… opera como ellos.</p>
+    </div>
+  </header>
+
+  <!-- Intro -->
+  <section class="container">
+    <div class="highlight">
+      <p>¿Qué si te dijera que tu cadena de supermercados puede tomar decisiones <strong>con la misma inteligencia que Walmart, Costco o Amazon</strong>… sin necesidad de un presupuesto de Silicon Valley?</p>
+      <p>En el retail moderno, <strong>la ventaja competitiva ya no está en el tamaño… está en los datos.</strong></p>
+      <p>Con <strong>RetailMind 360°</strong>, transformamos tus tickets de venta en una <strong>arquitectura de inteligencia de clase mundial</strong>, accesible, escalable y diseñada para el contexto venezolano.</p>
+    </div>
+
+    <!-- Beneficios -->
+    <h2>¿Por qué RetailMind 360°?</h2>
+    <div class="features">
+      <div class="feature-card">
+        <h3>La misma potencia que los gigantes</h3>
+        <p>Segmentación RFM, análisis de canasta, detección de obsolescencia y dashboards por área: ventas, logística, marketing.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Plataformas accesibles</h3>
+        <p>Integración con Power BI, IBM Cognos o Tableau bajo esquemas SaaS que caben en tu presupuesto.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Nosotros hacemos el trabajo pesado</h3>
+        <p>6 Datamarts especializados, ETL diario, limpieza de datos y capacitación incluida. Tú te enfocas en actuar.</p>
+      </div>
+    </div>
+
+    <!-- Resultados -->
+    <h2>Resultados reales, en semanas</h2>
+    <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+      <li>↑ 15–20% en Ticket-Promedio en clientes Champions</li>
+      <li>↓ Merma y obsolescencia mediante alertas proactivas</li>
+      <li>✅ Cero rupturas en productos clave gracias a reabastecimiento inteligente</li>
+      <li>🎯 Campañas 40% más efectivas con segmentación hiperlocal</li>
+    </ul>
+  </section>
+
+  <!-- Casos de uso -->
+  <section class="container">
+    <h2>Casos concretos que ya puedes resolver HOY</h2>
+    <table style="width:100%; border-collapse: collapse; margin-top: 1.5rem;">
+      <tr style="background:#e0f2fe;">
+        <th style="padding:0.75rem; text-align:left;">Problema</th>
+        <th style="padding:0.75rem; text-align:left;">Solución con RetailMind 360°</th>
+      </tr>
+      <tr style="border-bottom:1px solid #e2e8f0;">
+        <td style="padding:0.75rem;">“No sé qué productos están perdiendo valor”</td>
+        <td style="padding:0.75rem;">Gráfico de Pareto + alerta de obsolescencia (>180 días)</td>
+      </tr>
+      <tr style="border-bottom:1px solid #e2e8f0;">
+        <td style="padding:0.75rem;">“Invierto en promociones que no generan tráfico”</td>
+        <td style="padding:0.75rem;">Segmentación NAP + medición de impacto post-iniciativa</td>
+      </tr>
+      <tr>
+        <td style="padding:0.75rem;">“Mis sucursales operan en silos”</td>
+        <td style="padding:0.75rem;">Dashboard unificado con radar de desempeño por tienda</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- Cómo funciona -->
+  <section class="container">
+    <h2>¿Cómo funciona?</h2>
+    <ol style="margin-left: 1.5rem; margin-top: 1rem;">
+      <li><strong>Conectamos</strong> tus datos (tickets, productos, clientes, sucursales)</li>
+      <li><strong>Construimos</strong> 6 Datamarts especializados con calidad de datos empresarial</li>
+      <li><strong>Integramos</strong> con la plataforma de BI que elijas (Power BI, Cognos, etc.)</li>
+      <li><strong>Entregamos</strong> dashboards listos + capacitación en “Retailding”</li>
+      <li><strong>Actualizamos</strong> diariamente como parte de tu suscripción</li>
+    </ol>
+    <p><strong>Tiempo de implementación: 3–4 semanas</strong><br>
+    <strong>Primeros insights: en menos de 14 días</strong></p>
+  </section>
+
+  <!-- Testimonios -->
+  <section class="container">
+    <h2>Lo que dicen quienes ya operan como gigantes</h2>
+    <div class="testimonial">
+      “Antes, decidíamos con Excel y corazonadas. Hoy, sabemos que en Los Teques están nuestros Champions… y ajustamos el surtido en tiempo real.”<br>
+      <strong>— Gerente de Cadena con 12 sucursales, Caracas</strong>
+    </div>
+    <div class="testimonial">
+      “Descubrimos un ‘producto estrella’ en Fruver que no estaba en nuestro radar. Hoy representa el 12% de las ventas de la categoría.”<br>
+      <strong>— Director de Categorías, Maracay</strong>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="container">
+    <div class="cta">
+      <h2>¡Transforma tu cadena en un supermercado inteligente!</h2>
+      <p><strong>No necesitas ser grande para pensar como un gigante.</strong><br>
+      Con RetailMind 360°, tienes todo lo que necesitas para competir… y ganar.</p>
+      <a href="#contacto" class="btn">SOLICITAR DEMO GRATUITA</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="container">
+    <h2>Preguntas frecuentes</h2>
+    <div class="faq-item">
+      <h3>¿Necesito cambiar mi POS o ERP?</h3>
+      <p>No. Trabajamos con los datos que ya generas.</p>
+    </div>
+    <div class="faq-item">
+      <h3>¿Requiero contratar data scientists?</h3>
+      <p>No. La metodología, los modelos y la capacitación están incluidos.</p>
+    </div>
+    <div class="faq-item">
+      <h3>¿Funciona en Venezuela con la infraestructura actual?</h3>
+      <p>Sí. Nuestra arquitectura es ligera, cloud-first y compatible con conexiones limitadas.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2025 RetailMind 360°</p>
+      <p>Transformamos tickets de venta en decisiones estratégicas.<br>Hecho en Venezuela. Pensado para el mundo.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

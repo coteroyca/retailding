@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RetailMind 360° — La Rueda del Ciclo Operativo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ─────────────────────────────────────────────────────────── */
+:root {
+  --navy:       #0D2B4E;
+  --navy-80:    rgba(13,43,78,.8);
+  --navy-10:    rgba(13,43,78,.06);
+  --blue:       #1A5FA8;
+  --blue-lt:    #EBF3FC;
+  --gold:       #C48A0A;
+  --gold-lt:    #FDF5E0;
+  --gold-mid:   #E8A020;
+  --teal:       #1D9E75;
+  --teal-lt:    #E4F7F0;
+  --coral:      #C04B2E;
+  --coral-lt:   #FDF0EC;
+  --sand:       #F7F4EE;
+  --stone:      #EEE9DF;
+  --ink:        #1A1A1A;
+  --slate:      #4A4A52;
+  --mist:       #8A8A94;
+  --rule:       rgba(13,43,78,.1);
+  --white:      #FFFFFF;
+  --ff-display: 'Cormorant Garamond', Georgia, serif;
+  --ff-body:    'Outfit', system-ui, sans-serif;
+  --ff-mono:    'DM Mono', monospace;
+  --r:          8px;
+  --r-lg:       16px;
+  --ease:       cubic-bezier(.4,0,.2,1);
+}
+
+/* ── RESET ───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--ff-body); background: var(--white); color: var(--ink); overflow-x: hidden; line-height: 1.65; }
+img  { display: block; max-width: 100%; }
+a    { text-decoration: none; }
+
+/* ── UTILITIES ───────────────────────────────────────────────────────── */
+.container  { max-width: 1140px; margin: 0 auto; padding: 0 2rem; }
+.tag {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-family: var(--ff-mono); font-size: .7rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--gold);
+  border: 1px solid rgba(196,138,10,.35);
+  padding: .28rem .8rem; border-radius: 2px;
+}
+.tag::before { content: '◆'; font-size: .45rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--ff-body); font-size: 1rem; font-weight: 600;
+  padding: .9rem 2rem; border-radius: var(--r);
+  cursor: pointer; text-decoration: none;
+  transition: all .22s var(--ease); border: 2px solid transparent;
+}
+.btn-primary { background: var(--navy); color: var(--white); border-color: var(--navy); }
+.btn-primary:hover { background: var(--blue); border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,43,78,.2); }
+.btn-gold   { background: var(--gold); color: var(--white); border-color: var(--gold); }
+.btn-gold:hover { background: #A87208; border-color: #A87208; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,138,10,.3); }
+.btn-outline { background: transparent; color: var(--navy); border-color: var(--navy); }
+.btn-outline:hover { background: var(--navy); color: var(--white); }
+.btn-lg { font-size: 1.1rem; padding: 1.1rem 2.6rem; }
+
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity .65s var(--ease), transform .65s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: .1s; }
+.reveal-delay-2 { transition-delay: .2s; }
+.reveal-delay-3 { transition-delay: .3s; }
+
+/* ── NAV ─────────────────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border-bottom: 1px solid var(--rule);
+  transition: box-shadow .3s;
+}
+nav.scrolled { box-shadow: 0 2px 28px rgba(13,43,78,.08); }
+.nav-inner {
+  max-width: 1140px; margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+}
+.nav-logo img { height: 42px; width: auto; }
+.nav-links { display: flex; align-items: center; gap: 2.2rem; }
+.nav-links a {
+  font-size: .88rem; font-weight: 500; color: var(--slate);
+  letter-spacing: .01em; transition: color .2s;
+}
+.nav-links a:hover { color: var(--navy); }
+.nav-cta { font-size: .88rem !important; padding: .55rem 1.4rem !important; }
+
+/* ── HERO ────────────────────────────────────────────────────────────── */
+.hero {
+  padding: 140px 0 100px;
+  background: var(--white);
+  position: relative; overflow: hidden;
+}
+/* Geometric background — rueda abstracta */
+.hero-bg {
+  position: absolute; top: -80px; right: -120px;
+  width: 780px; height: 780px; pointer-events: none;
+}
+.hero-bg svg { width: 100%; height: 100%; opacity: .06; }
+
+.hero-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: center;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.hero-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+.hero h1 {
+  font-family: var(--ff-display);
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  font-weight: 700; line-height: 1.06; color: var(--navy);
+  margin-bottom: 1.5rem; letter-spacing: -.01em;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero h1 strong { font-weight: 700; }
+
+.hero-sub { font-size: 1.1rem; color: var(--slate); max-width: 480px; margin-bottom: 2.4rem; line-height: 1.75; }
+
+.hero-cta-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+
+.hero-proof { display: flex; gap: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--rule); }
+.proof-item strong {
+  display: block; font-family: var(--ff-display); font-size: 2.2rem;
+  font-weight: 700; color: var(--navy); line-height: 1;
+}
+.proof-item span { font-size: .8rem; color: var(--mist); letter-spacing: .04em; margin-top: .2rem; display: block; }
+
+/* Dashboard mockup */
+.hero-dash {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  box-shadow: 0 24px 64px rgba(13,43,78,.1), 0 2px 8px rgba(13,43,78,.06);
+  overflow: hidden;
+}
+.dash-topbar {
+  background: var(--navy); padding: .8rem 1.2rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.dash-topbar-dots { display: flex; gap: 6px; }
+.dash-topbar-dots span { width: 10px; height: 10px; border-radius: 50%; }
+.dash-topbar-label { font-family: var(--ff-mono); font-size: .65rem; color: rgba(255,255,255,.4); letter-spacing: .12em; }
+.dash-body { padding: 1.25rem; }
+.kpi-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.25rem; }
+.kpi-box {
+  background: var(--sand); border-radius: var(--r);
+  border: 1px solid var(--stone); padding: 1rem;
+}
+.kpi-val { font-family: var(--ff-display); font-size: 1.7rem; font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: .2rem; }
+.kpi-val.up { color: var(--teal); }
+.kpi-val.dn { color: var(--coral); }
+.kpi-lbl { font-size: .67rem; color: var(--mist); letter-spacing: .07em; text-transform: uppercase; font-family: var(--ff-mono); }
+.seg-label { font-family: var(--ff-mono); font-size: .65rem; color: var(--mist); letter-spacing: .1em; margin-bottom: .75rem; text-transform: uppercase; }
+.seg-row { display: flex; align-items: center; gap: .75rem; margin-bottom: .5rem; }
+.seg-nm { font-size: .75rem; color: var(--slate); width: 82px; flex-shrink: 0; }
+.seg-bar-bg { flex: 1; height: 7px; background: var(--stone); border-radius: 4px; overflow: hidden; }
+.seg-bar { height: 100%; border-radius: 4px; }
+.seg-pct { font-family: var(--ff-mono); font-size: .68rem; color: var(--mist); width: 30px; text-align: right; }
+
+/* ── TICKER STRIP ─────────────────────────────────────────────────────── */
+.ticker {
+  background: var(--navy); padding: 1rem 0; overflow: hidden;
+  border-top: 2px solid var(--gold-mid); border-bottom: 2px solid var(--gold-mid);
+}
+.ticker-track {
+  display: flex; gap: 3rem; white-space: nowrap;
+  animation: ticker 35s linear infinite;
+}
+.ticker-item {
+  font-family: var(--ff-mono); font-size: .72rem; letter-spacing: .08em;
+  color: rgba(255,255,255,.55); display: flex; align-items: center; gap: .6rem;
+  flex-shrink: 0;
+}
+.ticker-item::before { content: '◆'; color: var(--gold-mid); font-size: .4rem; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── SECTIONS COMMON ─────────────────────────────────────────────────── */
+section { padding: 96px 0; }
+.section-label { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+.section-label::after { content: ''; flex: 0 0 48px; height: 1px; background: var(--rule); }
+.section-h { font-family: var(--ff-display); font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--navy); line-height: 1.15; }
+.section-h em { font-style: italic; color: var(--gold); }
+.section-sub { font-size: 1.05rem; color: var(--slate); margin-top: 1rem; max-width: 580px; line-height: 1.75; }
+
+/* ── PROBLEM SECTION ─────────────────────────────────────────────────── */
+.problem { background: var(--sand); }
+.problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.problem-visual { position: relative; }
+.road-card {
+  background: var(--white); border: 1px solid var(--stone);
+  border-radius: var(--r-lg); padding: 2rem;
+  box-shadow: 0 4px 20px rgba(13,43,78,.06);
+}
+.obstacle-list { list-style: none; margin-top: 1.5rem; }
+.obstacle-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1rem 0; border-bottom: 1px solid var(--stone);
+}
+.obstacle-item:last-child { border-bottom: none; }
+.obs-icon {
+  width: 34px; height: 34px; flex-shrink: 0;
+  border-radius: 6px; display: flex; align-items: center;
+  justify-content: center; font-size: .75rem; font-weight: 700;
+}
+.obs-title { font-weight: 600; color: var(--navy); font-size: .92rem; margin-bottom: .2rem; }
+.obs-desc { font-size: .85rem; color: var(--slate); }
+
+/* Embudo de preguntas */
+.funnel-wrap { margin-top: 2.5rem; }
+.funnel-step {
+  border-radius: var(--r); padding: 1.25rem 1.5rem;
+  margin-bottom: .75rem; position: relative;
+}
+.funnel-step::after {
+  content: '▼'; position: absolute; bottom: -1.1rem; left: 50%;
+  transform: translateX(-50%); font-size: .7rem; color: var(--mist); z-index: 1;
+}
+.funnel-step:last-child::after { display: none; }
+.funnel-round { font-family: var(--ff-mono); font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .4rem; }
+.funnel-q { font-weight: 600; font-size: .95rem; margin-bottom: .3rem; }
+.funnel-r { font-size: .88rem; font-style: italic; }
+
+/* ── VALUE PROPS ─────────────────────────────────────────────────────── */
+.props { background: var(--white); }
+.props-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--stone);
+  border: 1px solid var(--stone); border-radius: var(--r-lg); overflow: hidden;
+  margin-top: 3.5rem;
+}
+.prop-card {
+  background: var(--white); padding: 2rem 1.75rem;
+  transition: background .2s, transform .2s;
+  cursor: default;
+}
+.prop-card:hover { background: var(--sand); }
+.prop-num { font-family: var(--ff-mono); font-size: .65rem; color: var(--gold); letter-spacing: .15em; margin-bottom: 1rem; }
+.prop-card h3 { font-family: var(--ff-display); font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: .75rem; line-height: 1.3; }
+.prop-card blockquote {
+  font-size: .83rem; color: var(--slate); font-style: italic;
+  border-left: 2px solid var(--gold-mid); padding-left: .75rem;
+  margin-bottom: .75rem; line-height: 1.65;
+}
+.prop-card p { font-size: .86rem; color: var(--mist); line-height: 1.65; }
+.prop-badge {
+  display: inline-block; margin-top: .9rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+  padding: .25rem .75rem; border-radius: 100px;
+}
+
+/* ── WHEEL SECTION ───────────────────────────────────────────────────── */
+.wheel-section { background: var(--navy); padding: 96px 0; }
+.wheel-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.wheel-text .tag { color: var(--gold-mid); border-color: rgba(232,160,32,.4); }
+.wheel-text .section-h { color: var(--white); }
+.wheel-text .section-h em { color: var(--gold-mid); }
+.wheel-text .section-sub { color: rgba(255,255,255,.6); }
+.wheel-frases { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.wheel-frase {
+  background: rgba(255,255,255,.06);
+  border-left: 3px solid var(--gold-mid);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 1rem 1.25rem;
+  font-size: .92rem; color: rgba(255,255,255,.85);
+  font-family: var(--ff-display); font-style: italic; line-height: 1.6;
+}
+/* Animated wheel graphic */
+.wheel-graphic { display: flex; justify-content: center; align-items: center; }
+.wheel-svg-wrap { position: relative; width: 340px; height: 340px; }
+.wheel-svg-wrap svg { width: 100%; height: 100%; }
+.wheel-rotate { transform-origin: 170px 170px; animation: spin 18s linear infinite; }
+.wheel-label {
+  position: absolute; font-family: var(--ff-mono); font-size: .65rem;
+  color: rgba(255,255,255,.55); letter-spacing: .08em; text-align: center;
+  white-space: nowrap;
+}
+
+/* ── COMPARISON ──────────────────────────────────────────────────────── */
+.comparison { background: var(--sand); }
+.comp-table {
+  width: 100%; border-collapse: collapse;
+  border: 1px solid var(--stone); border-radius: var(--r-lg);
+  overflow: hidden; margin-top: 3.5rem;
+}
+.comp-table thead tr { background: var(--navy); }
+.comp-table th {
+  padding: 1.1rem 1.5rem; text-align: left;
+  font-size: .8rem; font-weight: 600; letter-spacing: .06em;
+}
+.comp-table th:first-child { color: rgba(255,255,255,.5); }
+.comp-table th.bad  { color: #FCA5A5; }
+.comp-table th.good { color: #6EE7B7; }
+.comp-table tbody tr { border-bottom: 1px solid var(--stone); }
+.comp-table tbody tr:last-child { border-bottom: none; }
+.comp-table tbody tr:hover { background: var(--white); }
+.comp-table td { padding: 1rem 1.5rem; font-size: .88rem; vertical-align: top; }
+.comp-table td:first-child { font-weight: 600; color: var(--navy); }
+.comp-table td.bad  { color: var(--coral); }
+.comp-table td.good { color: var(--teal); font-weight: 500; }
+.comp-table tbody tr:nth-child(even) td { background: var(--sand); }
+.comp-table tbody tr:nth-child(even):hover td { background: var(--white); }
+
+/* ── TESTIMONIALS ─────────────────────────────────────────────────────── */
+.testimonials { background: var(--white); }
+.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3.5rem; }
+.testi-card {
+  border: 1px solid var(--stone); border-radius: var(--r-lg);
+  padding: 2rem; background: var(--white); position: relative;
+  transition: box-shadow .2s, transform .2s;
+}
+.testi-card:hover { box-shadow: 0 12px 36px rgba(13,43,78,.08); transform: translateY(-3px); }
+.testi-card::before {
+  content: '\201C'; position: absolute; top: .5rem; right: 1.25rem;
+  font-family: var(--ff-display); font-size: 5rem; color: var(--stone); line-height: 1;
+}
+.testi-card p { font-size: .93rem; color: var(--slate); line-height: 1.75; font-style: italic; margin-bottom: 1.5rem; position: relative; z-index: 1; }
+.testi-author { display: flex; align-items: center; gap: .75rem; }
+.testi-av {
+  width: 42px; height: 42px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--ff-display); font-weight: 700; font-size: .95rem; color: var(--white);
+}
+.testi-name { font-size: .88rem; font-weight: 600; color: var(--navy); }
+.testi-role { font-size: .75rem; color: var(--mist); font-family: var(--ff-mono); }
+
+/* ── PLANS ────────────────────────────────────────────────────────────── */
+.plans { background: var(--sand); }
+.plans-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3.5rem; }
+.plan-card {
+  border: 1px solid var(--stone); border-radius: var(--r-lg);
+  padding: 2.25rem; background: var(--white); position: relative;
+  transition: transform .2s, box-shadow .2s;
+}
+.plan-card:hover { transform: translateY(-4px); box-shadow: 0 16px 44px rgba(13,43,78,.1); }
+.plan-card.featured { border-color: var(--gold); border-width: 2px; box-shadow: 0 6px 28px rgba(196,138,10,.12); }
+.plan-badge {
+  position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+  background: var(--gold); color: var(--white);
+  font-family: var(--ff-mono); font-size: .65rem; letter-spacing: .12em;
+  padding: .22rem 1rem; border-radius: 0 0 6px 6px;
+}
+.plan-name { font-family: var(--ff-display); font-size: 1.35rem; font-weight: 700; color: var(--navy); margin-bottom: .3rem; }
+.plan-scope { font-family: var(--ff-mono); font-size: .7rem; color: var(--mist); margin-bottom: 1.5rem; }
+.plan-price { font-family: var(--ff-display); font-size: 2.4rem; font-weight: 700; color: var(--navy); line-height: 1; }
+.plan-price sup { font-size: 1rem; vertical-align: super; }
+.plan-price-note { font-size: .75rem; color: var(--mist); margin: .25rem 0 1.75rem; font-style: italic; }
+.plan-features { list-style: none; border-top: 1px solid var(--stone); padding-top: 1.5rem; }
+.plan-features li {
+  font-size: .86rem; color: var(--slate); padding: .38rem 0;
+  display: flex; gap: .6rem; align-items: flex-start;
+}
+.plan-features li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; }
+.plan-cta { width: 100%; text-align: center; margin-top: 2rem; }
+
+/* ── FAQ ──────────────────────────────────────────────────────────────── */
+.faq { background: var(--white); }
+.faq-grid { max-width: 760px; margin: 3.5rem auto 0; }
+.faq-item { border-bottom: 1px solid var(--stone); }
+.faq-q {
+  width: 100%; background: none; border: none;
+  padding: 1.4rem 0; display: flex; align-items: center;
+  justify-content: space-between; gap: 1rem;
+  font-family: var(--ff-body); font-size: .98rem; font-weight: 600;
+  color: var(--navy); cursor: pointer; text-align: left;
+  transition: color .2s;
+}
+.faq-q:hover { color: var(--gold); }
+.faq-icon {
+  width: 26px; height: 26px; flex-shrink: 0;
+  border: 1px solid var(--stone); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem; color: var(--mist);
+  transition: transform .25s var(--ease), background .2s, border-color .2s, color .2s;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); background: var(--gold); border-color: var(--gold); color: var(--white); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .35s var(--ease); }
+.faq-item.open .faq-a { max-height: 300px; }
+.faq-a p { font-size: .92rem; color: var(--slate); line-height: 1.75; padding-bottom: 1.5rem; }
+
+/* ── CTA FINAL ────────────────────────────────────────────────────────── */
+.cta-final {
+  background: var(--sand);
+  border-top: 1px solid var(--stone);
+  padding: 96px 0; text-align: center;
+}
+.cta-final .section-h { margin: 1rem auto; max-width: 680px; }
+.cta-final .section-sub { margin: 0 auto 2.5rem; }
+.cta-form {
+  display: flex; gap: .75rem; justify-content: center;
+  flex-wrap: wrap; max-width: 700px; margin: 0 auto 1.25rem;
+}
+.cta-form input {
+  font-family: var(--ff-body); font-size: .95rem;
+  padding: .9rem 1.2rem; border-radius: var(--r);
+  border: 1px solid var(--stone); background: var(--white);
+  color: var(--ink); outline: none; width: 230px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.cta-form input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,95,168,.12); }
+.cta-form input::placeholder { color: var(--mist); }
+.cta-note { font-size: .78rem; color: var(--mist); }
+
+/* ── FOOTER ───────────────────────────────────────────────────────────── */
+footer {
+  background: var(--navy); padding: 2.5rem 0;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.footer-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo img { height: 34px; width: auto; filter: brightness(0) invert(1); opacity: .8; }
+.footer-copy { font-size: .75rem; color: rgba(255,255,255,.3); }
+
+/* ── RESPONSIVE ───────────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .hero-inner, .problem-grid, .wheel-inner { grid-template-columns: 1fr; }
+  .hero-dash, .wheel-graphic { display: none; }
+  .props-grid { grid-template-columns: 1fr 1fr; }
+  .testi-grid, .plans-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .props-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .hero h1 { font-size: 2.4rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────────────── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="https://demo.lat/logos/Logo%20RetailMind%20360%20-%20Globo%20Azul-%20Flecha%20360%20-%20TEXTO%20sin%20fondo.png" alt="RetailMind 360°">
+    </a>
+    <div class="nav-links">
+      <a href="#propuestas">Propuestas</a>
+      <a href="#comparativa">Comparativa</a>
+      <a href="#planes">Planes</a>
+      <a href="#faq">FAQ</a>
+      <a href="#demo" class="btn btn-primary nav-cta">Agendar demo</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <!-- Rueda abstracta de fondo -->
+  <div class="hero-bg">
+    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="250" cy="250" r="220" fill="none" stroke="#0D2B4E" stroke-width="1.5"/>
+      <circle cx="250" cy="250" r="170" fill="none" stroke="#0D2B4E" stroke-width="1"/>
+      <circle cx="250" cy="250" r="120" fill="none" stroke="#0D2B4E" stroke-width="1"/>
+      <circle cx="250" cy="250" r="50"  fill="none" stroke="#0D2B4E" stroke-width="2"/>
+      <line x1="250" y1="30"  x2="250" y2="470" stroke="#0D2B4E" stroke-width="1"/>
+      <line x1="30"  y1="250" x2="470" y2="250" stroke="#0D2B4E" stroke-width="1"/>
+      <line x1="94"  y1="94"  x2="406" y2="406" stroke="#0D2B4E" stroke-width=".8"/>
+      <line x1="406" y1="94"  x2="94"  y2="406" stroke="#0D2B4E" stroke-width=".8"/>
+      <line x1="55"  y1="155" x2="445" y2="345" stroke="#0D2B4E" stroke-width=".5"/>
+      <line x1="155" y1="55"  x2="345" y2="445" stroke="#0D2B4E" stroke-width=".5"/>
+      <line x1="445" y1="155" x2="55"  y2="345" stroke="#0D2B4E" stroke-width=".5"/>
+      <line x1="345" y1="55"  x2="155" y2="445" stroke="#0D2B4E" stroke-width=".5"/>
+    </svg>
+  </div>
+
+  <div class="container">
+    <div class="hero-inner">
+      <div class="reveal">
+        <div class="hero-eyebrow"><span class="tag">La Rueda del Ciclo Operativo</span></div>
+        <h1>Su negocio gira.<br><em>¿Sabe</em> cómo<br>está <strong>girando?</strong></h1>
+        <p class="hero-sub">RetailMind 360° convierte cada ticket de venta en inteligencia accionable. Visibilidad en tiempo real. Decisiones que se pueden medir, ajustar y controlar.</p>
+        <div class="hero-cta-row">
+          <a href="#demo" class="btn btn-gold btn-lg">Agendar demo gratuita →</a>
+          <a href="#propuestas" class="btn btn-outline">Ver propuestas de valor</a>
+        </div>
+        <div class="hero-proof">
+          <div class="proof-item"><strong>4 sem.</strong><span>Implementación</span></div>
+          <div class="proof-item"><strong>5</strong><span>Datamarts diarios</span></div>
+          <div class="proof-item"><strong>24/7</strong><span>Visibilidad automática</span></div>
+        </div>
+      </div>
+
+      <!-- Dashboard mockup -->
+      <div class="hero-dash reveal reveal-delay-2">
+        <div class="dash-topbar">
+          <div class="dash-topbar-dots">
+            <span style="background:#FF5F57"></span>
+            <span style="background:#FFBD2E"></span>
+            <span style="background:#28C840"></span>
+          </div>
+          <span class="dash-topbar-label">RETAILMIND 360° · LIVE</span>
+        </div>
+        <div class="dash-body">
+          <div class="kpi-row">
+            <div class="kpi-box"><div class="kpi-val up">+12.4%</div><div class="kpi-lbl">Margen hoy</div></div>
+            <div class="kpi-box"><div class="kpi-val">$84,200</div><div class="kpi-lbl">Revenue semana</div></div>
+            <div class="kpi-box"><div class="kpi-val dn">3 SKUs</div><div class="kpi-lbl">Riesgo ruptura</div></div>
+            <div class="kpi-box"><div class="kpi-val up">68</div><div class="kpi-lbl">NPS promedio</div></div>
+          </div>
+          <div class="seg-label">Segmentación RFM · clientes activos</div>
+          <div class="seg-row">
+            <span class="seg-nm">Champions</span>
+            <div class="seg-bar-bg"><div class="seg-bar" style="width:62%;background:#1D9E75"></div></div>
+            <span class="seg-pct">62%</span>
+          </div>
+          <div class="seg-row">
+            <span class="seg-nm">At Risk</span>
+            <div class="seg-bar-bg"><div class="seg-bar" style="width:21%;background:#C04B2E"></div></div>
+            <span class="seg-pct">21%</span>
+          </div>
+          <div class="seg-row">
+            <span class="seg-nm">Potenciales</span>
+            <div class="seg-bar-bg"><div class="seg-bar" style="width:17%;background:#1A5FA8"></div></div>
+            <span class="seg-pct">17%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TICKER ──────────────────────────────────────────────────────── -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Automatización 24/7</span>
+    <span class="ticker-item">Data real de sus tickets</span>
+    <span class="ticker-item">Gestión proactiva de inventario</span>
+    <span class="ticker-item">Estrellas ocultas de producto</span>
+    <span class="ticker-item">Planogramas basados en data</span>
+    <span class="ticker-item">Inventario obsoleto detectado</span>
+    <span class="ticker-item">Reducción de merma</span>
+    <span class="ticker-item">Integración de silos</span>
+    <span class="ticker-item">ROI de cada decisión</span>
+    <span class="ticker-item">Oportunidades geográficas</span>
+    <span class="ticker-item">Expansión basada en datos</span>
+    <span class="ticker-item">Automatización 24/7</span>
+    <span class="ticker-item">Data real de sus tickets</span>
+    <span class="ticker-item">Gestión proactiva de inventario</span>
+    <span class="ticker-item">Estrellas ocultas de producto</span>
+    <span class="ticker-item">Planogramas basados en data</span>
+    <span class="ticker-item">Inventario obsoleto detectado</span>
+    <span class="ticker-item">Reducción de merma</span>
+    <span class="ticker-item">Integración de silos</span>
+    <span class="ticker-item">ROI de cada decisión</span>
+    <span class="ticker-item">Oportunidades geográficas</span>
+    <span class="ticker-item">Expansión basada en datos</span>
+  </div>
+</div>
+
+<!-- ── PROBLEM ─────────────────────────────────────────────────────── -->
+<section class="problem">
+  <div class="container">
+    <div class="problem-grid">
+
+      <div class="reveal">
+        <div class="section-label"><span class="tag">El terreno venezolano</span></div>
+        <h2 class="section-h">Una rueda sin tablero no avanza.<br><em>Aplasta.</em></h2>
+        <p class="section-sub">Su negocio no es una fotografía estática. Es un sistema dinámico con inercia y fricción — girando en una pista que no es plana.</p>
+
+        <div class="road-card" style="margin-top:2rem">
+          <div style="font-weight:600;color:var(--navy);margin-bottom:.5rem;font-size:.92rem">Los obstáculos del terreno</div>
+          <ul class="obstacle-list">
+            <li class="obstacle-item">
+              <div class="obs-icon" style="background:#FEE2E2;color:#C04B2E">%</div>
+              <div><div class="obs-title">Inflación — la pendiente constante</div><div class="obs-desc">El costo de reposición sube antes de que usted venda lo que tiene. La rueda consume capital sin que se vea.</div></div>
+            </li>
+            <li class="obstacle-item">
+              <div class="obs-icon" style="background:#FDF5E0;color:#C48A0A">$</div>
+              <div><div class="obs-title">Diferencial cambiario — fricción permanente</div><div class="obs-desc">Cada transacción tiene un costo real diferente según el medio de pago. El desgaste es invisible hasta que se suma.</div></div>
+            </li>
+            <li class="obstacle-item">
+              <div class="obs-icon" style="background:#EBF3FC;color:#1A5FA8">!</div>
+              <div><div class="obs-title">Regulaciones — baches repentinos</div><div class="obs-desc">Una decisión que funcionó el día 16 colapsa el 19 por un cambio regulatorio que nadie midió.</div></div>
+            </li>
+            <li class="obstacle-item">
+              <div class="obs-icon" style="background:#E4F7F0;color:#1D9E75">↻</div>
+              <div><div class="obs-title">Silos internos — ruedas desalineadas</div><div class="obs-desc">Compras y ventas de espaldas. Tres versiones del mismo número en una misma reunión.</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Embudo de preguntas -->
+      <div class="reveal reveal-delay-1">
+        <div class="section-label" style="margin-bottom:1.5rem"><span class="tag">La pregunta trampa</span></div>
+        <p style="font-size:.95rem;color:var(--slate);margin-bottom:1.5rem;line-height:1.75">Hágase estas tres preguntas en orden. La respuesta al silencio que aparece en la tercera es la razón por la que RetailMind existe.</p>
+
+        <div class="funnel-wrap">
+          <div class="funnel-step" style="background:var(--blue-lt)">
+            <div class="funnel-round" style="color:var(--blue)">Ronda 1 — Confianza</div>
+            <div class="funnel-q" style="color:var(--navy)">¿Sabe cuál es el producto que más se vendió en los últimos 3 días?</div>
+            <div class="funnel-r" style="color:var(--teal)">→ "Claro que sí."</div>
+          </div>
+          <div class="funnel-step" style="background:var(--gold-lt)">
+            <div class="funnel-round" style="color:var(--gold)">Ronda 2 — La fisura</div>
+            <div class="funnel-q" style="color:var(--navy)">¿En qué sucursal? ¿En qué turno? ¿Con qué margen real, descontando la tasa de hoy?</div>
+            <div class="funnel-r" style="color:var(--gold)">→ "Bueno... más o menos."</div>
+          </div>
+          <div class="funnel-step" style="background:var(--coral-lt)">
+            <div class="funnel-round" style="color:var(--coral)">Ronda 3 — La contradicción</div>
+            <div class="funnel-q" style="color:var(--navy)">Si sabe todo eso... ¿por qué hay merma? ¿Por qué hay stock agotado? ¿Por qué hay capital que se devalúa?</div>
+            <div class="funnel-r" style="color:var(--coral);font-weight:600">→ Silencio.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:1.5rem;padding:1.25rem 1.5rem;background:var(--navy);border-radius:var(--r);font-family:var(--ff-display);font-size:1.05rem;color:rgba(255,255,255,.9);font-style:italic;line-height:1.6">
+          "Saber no es lo mismo que medir. Y medir no es suficiente — hay que tener el dato en el momento en que la decisión todavía puede cambiar algo."
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VALUE PROPS ──────────────────────────────────────────────────── -->
+<section class="props" id="propuestas">
+  <div class="container">
+    <div class="reveal" style="max-width:620px">
+      <div class="section-label"><span class="tag">11 Propuestas de valor</span></div>
+      <h2 class="section-h">Lo que RetailMind 360°<br>hace por su cadena</h2>
+      <p class="section-sub">Cada propuesta nace de conversaciones reales con operadores de retail. No son promesas — son los problemas exactos que resolvemos.</p>
+    </div>
+
+    <div class="props-grid reveal">
+      <div class="prop-card">
+        <div class="prop-num">01</div>
+        <h3>Automatización 24/7</h3>
+        <blockquote>"Le doy una tecla y el sistema me da lo que necesito de esta hora, esta semana o el fin de semana."</blockquote>
+        <p>Sus gerentes ven qué está pasando HOY y actúan en tiempo real.</p>
+        <span class="prop-badge" style="background:var(--teal-lt);color:var(--teal)">Elimina reportes manuales</span>
+      </div>
+      <div class="prop-card">
+        <div class="prop-num">02</div>
+        <h3>Data real, no teórica</h3>
+        <blockquote>"La data es real, viene del origen, no partes de nada teórico."</blockquote>
+        <p>Decisiones basadas en lo que REALMENTE pasa en sus tiendas.</p>
+        <span class="prop-badge" style="background:var(--blue-lt);color:var(--blue)">Certeza en cada análisis</span>
+      </div>
+      <div class="prop-card">
+        <div class="prop-num">03</div>
+        <h3>Gestión proactiva de stock</h3>
+        <blockquote>"No puedes llegar a cero con determinado producto porque ahí está tu venta y representa el 80%."</blockquote>
+        <p>Alertas antes de que el producto clave se agote.</p>
+        <span class="prop-badge" style="background:var(--coral-lt);color:var(--coral)">Cero rupturas críticas</span>
+      </div>
+      <div class="prop-card">
+        <div class="prop-num">04</div>
+        <h3>Estrellas ocultas</h3>
+        <blockquote>"Puedes tener un producto estrella que ni cuenta te has dado."</blockquote>
+        <p>Revenue oculto que ya existe en su operación — invisible sin datos.</p>
+        <span class="prop-badge" style="background:var(--gold-lt);color:var(--gold)">Oportunidades visibles</span>
+      </div>
+      <div class="prop-card">
+        <div class="prop-num">05</div>
+        <h3>Planogramas por data</h3>
+        <blockquote>"La rotación del producto lleva a darle más importancia en los anaqueles."</blockquote>
+        <p>Cada góndola diseñada con lo que realmente se vende en cada ubicación.</p>
+        <span class="prop-badge" style="background:var(--teal-lt);color:var(--teal)">Máximo m² de retorno</span>
+      </div>
+      <div class="prop-card">
+        <div class="prop-num">06</div>
+        <h3>Inventario obsoleto</h3>
+        <blockquote>"Productos que tienen más de seis meses y no se mueven... son obsoletos."</blockquote>
+        <p>Identifica sin rotación antes de que sean pérdidas totales.</p>
+        <span class="prop-badge" style="background:var(--blue-lt);color:var(--blue)">Libera capital</span>
+      </div>
+      <div class="prop-card">
+        <div class="prop-num">07</div>
+        <h3>Reducción de merma</h3>
+        <blockquote>"Con este sistema se logra prácticamente un ahorro con la disminución de la merma."</blockquote>
+        <p>Identifica productos con alta merma y habilita acciones correctivas.</p>
+        <span class="prop-badge" style="background:var(--coral-lt);color:var(--coral)">Impacto en bottom line</span>
+      </div>
+      <div class="prop-card">
+        <div class="prop-num">08</div>
+        <h3>Integra los silos</h3>
+        <blockquote>"Compras y ventas están de espalda. RetailMind logra que se compenetren."</blockquote>
+        <p>Una sola fuente de verdad para todos los departamentos.</p>
+        <span class="prop-badge" style="background:var(--gold-lt);color:var(--gold)">Alineación total</span>
+      </div>
+      <div class="prop-card">
+        <div class="prop-num">09</div>
+        <h3>ROI de cada decisión</h3>
+        <blockquote>"Decisión que tomes, nosotros la podemos medir."</blockquote>
+        <p>Si implementa transporte, nuevo horario o línea de productos — lo medimos.</p>
+        <span class="prop-badge" style="background:var(--teal-lt);color:var(--teal)">ROI demostrable</span>
+      </div>
+      <div class="prop-card">
+        <div class="prop-num">10</div>
+        <h3>Oportunidades geográficas</h3>
+        <blockquote>"No solo me interesa saber cuál zona más compra, sino también la que no me compra."</blockquote>
+        <p>Zonas con alto potencial donde su competencia vende y usted no.</p>
+        <span class="prop-badge" style="background:var(--blue-lt);color:var(--blue)">Mercados desatendidos</span>
+      </div>
+      <div class="prop-card">
+        <div class="prop-num">11</div>
+        <h3>Expansión basada en datos</h3>
+        <blockquote>"Los que te visitan son de Los Teques. Esos estudios son costosos."</blockquote>
+        <p>Sus propios datos reemplazan estudios de $20.000–$50.000.</p>
+        <span class="prop-badge" style="background:var(--coral-lt);color:var(--coral)">Decisión de inversión</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHEEL SECTION ────────────────────────────────────────────────── -->
+<section class="wheel-section">
+  <div class="container">
+    <div class="wheel-inner">
+      <div class="wheel-text reveal">
+        <div class="section-label"><span class="tag">El tablero del Ciclo Operativo</span></div>
+        <h2 class="section-h">RetailMind no es el volante.<br>Es el <em>tablero.</em></h2>
+        <p class="section-sub" style="color:rgba(255,255,255,.6)">El volante sigue siendo suyo. Nosotros le damos los instrumentos para que cada decisión tenga consecuencias que puede ver, medir y controlar.</p>
+        <div class="wheel-frases">
+          <div class="wheel-frase">"Toda decisión pone una rueda en movimiento. La pregunta no es si gira — es si sabe hacia dónde, a qué velocidad, y cuándo frenar."</div>
+          <div class="wheel-frase">"Lo que no se mide no se puede controlar. Y una rueda sin control no avanza: aplasta."</div>
+          <div class="wheel-frase">"La diferencia entre llegar al destino por suerte y llegar por gestión se llama tablero de control."</div>
+        </div>
+      </div>
+
+      <!-- Rueda animada -->
+      <div class="wheel-graphic reveal reveal-delay-2">
+        <div class="wheel-svg-wrap">
+          <svg viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg">
+            <!-- Aro exterior estático -->
+            <circle cx="170" cy="170" r="158" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1.5"/>
+            <!-- Rueda que gira -->
+            <g class="wheel-rotate">
+              <circle cx="170" cy="170" r="130" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+              <circle cx="170" cy="170" r="85"  fill="none" stroke="rgba(255,255,255,.1)"  stroke-width="1"/>
+              <!-- Radios -->
+              <line x1="170" y1="40"  x2="170" y2="300" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+              <line x1="40"  y1="170" x2="300" y2="170" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+              <line x1="78"  y1="78"  x2="262" y2="262" stroke="rgba(255,255,255,.1)"  stroke-width="1"/>
+              <line x1="262" y1="78"  x2="78"  y2="262" stroke="rgba(255,255,255,.1)"  stroke-width="1"/>
+              <!-- Puntos en aro exterior -->
+              <circle cx="170" cy="40"  r="5" fill="#E8A020"/>
+              <circle cx="300" cy="170" r="5" fill="#1D9E75"/>
+              <circle cx="170" cy="300" r="5" fill="#1A5FA8"/>
+              <circle cx="40"  cy="170" r="5" fill="#C04B2E"/>
+            </g>
+            <!-- Hub central estático -->
+            <circle cx="170" cy="170" r="38" fill="#0D2B4E" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+            <circle cx="170" cy="170" r="26" fill="none" stroke="#E8A020" stroke-width="2"/>
+            <circle cx="170" cy="170" r="8"  fill="#E8A020"/>
+          </svg>
+          <!-- Labels de los puntos -->
+          <div class="wheel-label" style="top:4px;left:50%;transform:translateX(-50%)">VENTAS</div>
+          <div class="wheel-label" style="right:-8px;top:50%;transform:translateY(-50%)">CLIENTES</div>
+          <div class="wheel-label" style="bottom:4px;left:50%;transform:translateX(-50%)">INVENTARIO</div>
+          <div class="wheel-label" style="left:-12px;top:50%;transform:translateY(-50%)">MARGEN</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPARISON ──────────────────────────────────────────────────── -->
+<section class="comparison" id="comparativa">
+  <div class="container">
+    <div class="reveal" style="max-width:620px">
+      <div class="section-label"><span class="tag">Dos formas de operar</span></div>
+      <h2 class="section-h">El mismo negocio.<br><em>Dos tableros.</em></h2>
+      <p class="section-sub">La diferencia no es el tamaño de la cadena. Es la calidad de la información con la que se toma cada decisión.</p>
+    </div>
+    <table class="comp-table reveal">
+      <thead>
+        <tr>
+          <th>Dimensión</th>
+          <th class="bad">Operación manual</th>
+          <th class="good">RetailMind 360°</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Herramientas</td><td class="bad">Excel, silos, corazonadas</td><td class="good">Power BI / Cognos con datos unificados</td></tr>
+        <tr><td>Tiempo de respuesta</td><td class="bad">Días. La información llega como autopsia</td><td class="good">Insights en &lt;14 días. Actualización diaria automática</td></tr>
+        <tr><td>Visión del cliente</td><td class="bad">"Entra mucha gente a la tienda"</td><td class="good">Segmentación RFM: Champions, At Risk, Lost</td></tr>
+        <tr><td>Inventario</td><td class="bad">Rupturas constantes o exceso sin visibilidad</td><td class="good">Alertas proactivas y análisis de obsolescencia</td></tr>
+        <tr><td>Márgenes</td><td class="bad">Calculados con tasa de ayer</td><td class="good">Margen real ajustado por tasa implícita del día</td></tr>
+        <tr><td>Decisiones estratégicas</td><td class="bad">Sin forma de medir su impacto</td><td class="good">ROI medible de cada iniciativa</td></tr>
+        <tr><td>Expansión</td><td class="bad">Estudios de $20.000–$50.000</td><td class="good">Sus propios datos de procedencia de clientes</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ─────────────────────────────────────────────────── -->
+<section class="testimonials">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto">
+      <div class="section-label" style="justify-content:center"><span class="tag">En sus propias palabras</span></div>
+      <h2 class="section-h">Lo que dicen<br>los <em>Retailders</em></h2>
+      <p class="section-sub" style="margin:1rem auto 0">Estas no son frases de marketing. Son citas textuales de operadores de retail que ya reconocieron su realidad.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <p>"Puedes tener un producto estrella que ni cuenta te has dado. Con RetailMind lo descubres en el primer dashboard."</p>
+        <div class="testi-author">
+          <div class="testi-av" style="background:linear-gradient(135deg,#1D9E75,#0D2B4E)">RC</div>
+          <div><div class="testi-name">Gerente de Categoría</div><div class="testi-role">Cadena regional · 12 tiendas</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <p>"Decisión que tomes, nosotros la podemos medir. Eso es exactamente lo que siempre le pedí a un sistema de datos."</p>
+        <div class="testi-author">
+          <div class="testi-av" style="background:linear-gradient(135deg,#1A5FA8,#0D2B4E)">MV</div>
+          <div><div class="testi-name">Director de Operaciones</div><div class="testi-role">Cadena nacional · 24 tiendas</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <p>"Antes compras y ventas estaban de espaldas. Ahora hablan el mismo idioma porque ven los mismos números."</p>
+        <div class="testi-author">
+          <div class="testi-av" style="background:linear-gradient(135deg,#C48A0A,#0D2B4E)">LG</div>
+          <div><div class="testi-name">CEO</div><div class="testi-role">Cadena familiar · 8 tiendas</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PLANES ───────────────────────────────────────────────────────── -->
+<section class="plans" id="planes">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto">
+      <div class="section-label" style="justify-content:center"><span class="tag">Planes</span></div>
+      <h2 class="section-h">Inteligencia de clase mundial<br>para <em>cada escala</em></h2>
+      <p class="section-sub" style="margin:1rem auto 0">Todos los planes incluyen implementación, capacitación y soporte. Sin contratos anuales forzosos el primer período.</p>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card reveal">
+        <div class="plan-name">Starter</div>
+        <div class="plan-scope">// 1–5 sucursales</div>
+        <div class="plan-price"><sup>$</sup>490<span style="font-size:1rem;font-weight:400">/mes</span></div>
+        <div class="plan-price-note">Orientativo · consultar según volumen</div>
+        <ul class="plan-features">
+          <li>5 datamarts diarios</li>
+          <li>Dashboard Power BI con RFM</li>
+          <li>Alertas de stock y obsolescencia</li>
+          <li>Capacitación inicial 4 horas</li>
+          <li>Soporte WhatsApp Business</li>
+        </ul>
+        <a href="#demo" class="btn btn-outline plan-cta">Agendar demo →</a>
+      </div>
+      <div class="plan-card featured reveal reveal-delay-1">
+        <div class="plan-badge">MÁS POPULAR</div>
+        <div class="plan-name">Professional</div>
+        <div class="plan-scope">// 6–15 sucursales</div>
+        <div class="plan-price"><sup>$</sup>990<span style="font-size:1rem;font-weight:400">/mes</span></div>
+        <div class="plan-price-note">Orientativo · consultar según volumen</div>
+        <ul class="plan-features">
+          <li>Todo Starter incluido</li>
+          <li>Análisis geográfico y mapa de oportunidades</li>
+          <li>ROI de decisiones estratégicas</li>
+          <li>Dashboard ejecutivo + operativo por rol</li>
+          <li>Capacitación 8h + taller gráficos avanzados</li>
+          <li>IBM Cognos Analytics disponible</li>
+          <li>Soporte prioritario</li>
+        </ul>
+        <a href="#demo" class="btn btn-gold plan-cta">Agendar demo →</a>
+      </div>
+      <div class="plan-card reveal reveal-delay-2">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-scope">// 16+ sucursales</div>
+        <div class="plan-price" style="font-size:1.7rem">A medida</div>
+        <div class="plan-price-note">Arquitectura personalizada</div>
+        <ul class="plan-features">
+          <li>Todo Professional incluido</li>
+          <li>Arquitectura Medallion completa</li>
+          <li>Clustering ML avanzado</li>
+          <li>Forecast de demanda por sucursal</li>
+          <li>Integración ERP/WMS existente</li>
+          <li>SLA garantizado + gerente de cuenta</li>
+          <li>Capacitación continua</li>
+        </ul>
+        <a href="#demo" class="btn btn-outline plan-cta">Conversemos →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ──────────────────────────────────────────────────────────── -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto">
+      <div class="section-label" style="justify-content:center"><span class="tag">FAQ</span></div>
+      <h2 class="section-h">Lo que preguntan<br>antes de la <em>demo</em></h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Necesito reemplazar mi sistema de punto de venta?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>No. RetailMind 360° se conecta a lo que ya tiene. Leemos sus tickets y unas pocas tablas de su sistema transaccional. No reemplazamos nada — construimos la capa analítica encima de su infraestructura existente.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto tiempo tarda la implementación?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>En menos de 4 semanas sus tickets producen inteligencia accionable. Semana 1: configuración y conexión. Semanas 2–3: datamarts y dashboards. Semana 4: capacitación y validación con su equipo.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Funciona si mis datos están en Excel o sistemas locales?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Sí. Ingestamos desde CSV, Excel, bases SQL, ERP/POS locales y APIs. La arquitectura Medallion normaliza y limpia sus datos independientemente del formato de origen.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Mis datos van a la nube? ¿Es seguro?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Operamos sobre infraestructura cloud con cifrado en reposo y en tránsito, certificaciones SOC 2 e ISO 27001. Sus datos no se comparten con terceros. Si prefiere solución on-premise, también lo evaluamos — hablemos en la demo.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si mi equipo no sabe usar dashboards avanzados?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>La capacitación está incluida en todos los planes. No solo enseñamos a usar la herramienta — entrenamos a su equipo para interpretar la volatilidad, seguir KPIs e interactuar con IA. La resistencia al cambio es falta de confianza, no de capacidad.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Power BI o IBM Cognos? ¿Tenemos que elegir?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>RetailMind es agnóstico en visualización. Entregamos la capa Gold — datos procesados y listos — y la conectamos a Power BI, IBM Cognos Analytics, Tableau o la herramienta que su organización ya tenga o prefiera.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA FINAL ─────────────────────────────────────────────────────── -->
+<section class="cta-final" id="demo">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label" style="justify-content:center"><span class="tag">Demo gratuita</span></div>
+      <h2 class="section-h">¿Cuántas semanas más puede permitirse<br>conducir <em>sin tablero?</em></h2>
+      <p class="section-sub">Agéndenos 45 minutos. Le mostramos su propio dashboard con datos de su cadena — y la tasa del día incorporada.</p>
+      <div class="cta-form">
+        <input type="text"  placeholder="Su nombre">
+        <input type="email" placeholder="Email corporativo">
+        <input type="tel"   placeholder="WhatsApp / teléfono">
+        <button class="btn btn-primary btn-lg" onclick="submitDemo()">Agendar demo gratuita →</button>
+      </div>
+      <p class="cta-note">Sin compromiso · Respuesta en menos de 24 horas · Demo personalizada con sus datos</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="#" class="footer-logo">
+        <img src="https://demo.lat/logos/Logo%20RetailMind%20360%20-%20Globo%20Azul-%20Flecha%20360%20-%20TEXTO%20sin%20fondo.png" alt="RetailMind 360°">
+      </a>
+      <p class="footer-copy">© 2025 RetailMind 360°. Inteligencia de datos para el retail moderno.</p>
+      <p class="footer-copy" style="font-family:var(--ff-mono);font-size:.65rem;color:rgba(255,255,255,.2)">retailmind360.com</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll shadow
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
+});
+
+// Reveal on scroll
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 60);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// FAQ accordion
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const open = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!open) item.classList.add('open');
+}
+
+// Form submit
+function submitDemo() {
+  const inputs = document.querySelectorAll('.cta-form input');
+  const vals = [...inputs].map(i => i.value.trim());
+  if (vals.some(v => !v)) {
+    inputs.forEach(i => {
+      if (!i.value.trim()) { i.style.borderColor = '#C04B2E'; }
+    });
+    setTimeout(() => inputs.forEach(i => i.style.borderColor = ''), 2200);
+    return;
+  }
+  const btn = document.querySelector('.cta-form .btn');
+  btn.textContent = '¡Listo! Le contactamos en 24 horas.';
+  btn.style.background = '#1D9E75';
+  btn.style.borderColor = '#1D9E75';
+  inputs.forEach(i => { i.value = ''; i.disabled = true; });
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+</body>
+</html>
