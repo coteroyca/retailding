@@ -29,9 +29,8 @@ function directionClass(direction: Direction) {
     case "neutral":
       return "text-white"; // neutro/blanco
     case "info":
-      return "info"; // neutro/blanco
     default:
-      return "info"; // neutro/blanco
+      return "info"; // color cian
   }
 }
 
