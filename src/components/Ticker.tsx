@@ -9,9 +9,14 @@ type TickerItem = {
   label: string;
   value: string;
   delta: string;
-  direction?: Direction; // opcional, default: neutral
+  direction?: Direction; // opcional, default: info
   description?: string;
   tooltip?: string;
+  displayName?: string;
+  category?: string;
+  formula?: string;
+  timeScope?: string;
+  howToRead?: string;
 };
 
 // Si no hay direction en el JSON, asumimos "neutral"
