@@ -57,7 +57,7 @@
     "id": "quincena",
     "label": "QUINCENA",
     "value": "BULL-MARKET",
-    "delta": "",
+    "delta": "↑↑",
     "direction": "up",
     "description": "Fase Bull-Market",
     "tooltip": "Inyección temporal de liquidez por cobros; clientes muestran alta disposición de compra y baja sensibilidad al precio."
