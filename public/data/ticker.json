@@ -3,8 +3,8 @@
     "id": "ticket-prom",
     "label": "TICKET-PROM",
     "value": "Bs 48.20",
-    "delta": "+3.4%",
-    "direction": "up",
+    "delta": "-3.4%",
+    "direction": "down",
     "description": "Ticket Promedio",
     "tooltip": "Valor monetario medio de cada transacción (Ventas totales / Número de tickets emitidos)."
   },
