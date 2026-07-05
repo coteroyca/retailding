@@ -491,6 +491,13 @@ const rawHtml = `
 
 
 export default function Page() {
+  useEffect(() => {
+    // Comprobar que lucide existe en el global
+    if (typeof window !== "undefined" && (window as any).lucide) {
+      (window as any).lucide.createIcons();
+    }
+  }, []);
+
   return (
     <div
       dangerouslySetInnerHTML={{ __html: rawHtml }}
