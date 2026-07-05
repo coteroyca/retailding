@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ticket-prom",
+    "label": "TICKET-PROM",
+    "value": "Bs 48.20",
+    "delta": "+3.4%",
+    "direction": "up",
+    "description": "Ticket Promedio",
+    "tooltip": "Valor monetario medio de cada transacción (Ventas totales / Número de tickets emitidos)."
+  },
+  {
+    "id": "demanda-arr",
+    "label": "DEMANDA-ARR",
+    "value": "120 udas",
+    "delta": "+8.1%",
+    "direction": "up",
+    "description": "Ritmo de Demanda",
+    "tooltip": "Tasa diaria de unidades vendidas; mide la aceleración de salida física."
+  },
+  {
+    "id": "margen-gen",
+    "label": "MARGEN-GEN",
+    "value": "18.2%",
+    "delta": "-1.5 pts",
+    "direction": "down",
+    "description": "Margen General",
+    "tooltip": "Porcentaje de rentabilidad bruta general tras costo de venta."
+  }
+  // ...añades el resto de KPIs que ya tienes en el ticker
+]
