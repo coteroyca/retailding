@@ -3,3 +3,12 @@
 @tailwind utilities;
 
 /* Tus estilos adicionales, si quieres, pueden ir debajo */
+
+/* Colores para up / down en el ticker y otros elementos */
+.up {
+  color: #00cfa8; /* verde (como en tu HTML original) */
+}
+
+.dn {
+  color: #ff3d5a; /* rojo (como en tu HTML original) */
+}
