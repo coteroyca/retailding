@@ -6,13 +6,13 @@
 
 /* Colores para up / down en el ticker y otros elementos */
 .up {
-  color: #00cfa8; /* verde (como en tu HTML original) */
+  color: #00cfa8 !important; /* verde (como en tu HTML original) */
 }
 
 .dn {
-  color: #ff3d5a; /* rojo (como en tu HTML original) */
+  color: #ff3d5a !important; /* rojo (como en tu HTML original) */
 }
 
 .info {
-  color: #00ffff; /* azul (porque es una INFO) */
+  color: #00ffff !important; /* azul (porque es una INFO) */
 }
