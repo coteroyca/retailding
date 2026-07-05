@@ -3,3 +3,73 @@ html, body {
   margin: 0;
   padding: 0;
 }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+        }
+        .custom-dashed {
+            background-image: linear-gradient(to right, #4b5563 50%, rgba(255,255,255,0) 0%);
+            background-position: bottom;
+            background-size: 10px 1px;
+            background-repeat: repeat-x;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b1220; /* Sincronizado con var(--ink) */
+            padding-top: 41px; /* Espacio para el ticker fixed superior */
+        }
+
+        /* ─── ESTILOS PERSONALIZADOS PARA EL CHART TICKER ─── */
+        .ticker {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(11, 18, 32, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 207, 168, 0.2);
+            padding: 10px 0;
+            overflow: hidden;
+            height: 41px;
+        }
+        .ticker-track {
+            display: flex;
+            gap: 50px;
+            animation: scroll-left 25s linear infinite;
+            white-space: nowrap;
+        }
+        .ticker-item {
+            font-family: 'IBM Plex Mono', monospace;
+            支配-size: 12px;
+            font-size: 12px;
+            color: #8fa3b8; /* var(--ash) */
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ticker-item .sym { color: #c8d8e8; font-weight: 600; }
+        .ticker-item .up  { color: #00cfa8; } /* var(--teal) */
+        .ticker-item .dn  { color: #ff3d5a; } /* var(--red) */
+        
+        @keyframes scroll-left {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Scrollbar estética para el panel explicativo largo */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 207, 168, 0.2);
+            border-radius: 2px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 207, 168, 0.4);
+        }
