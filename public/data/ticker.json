@@ -11,7 +11,7 @@
   {
     "id": "demanda-arr",
     "label": "DEMANDA-ARR",
-    "value": "120 udas",
+    "value": "120 u/día",
     "delta": "+8.1%",
     "direction": "up",
     "description": "Ritmo de Demanda",
@@ -25,6 +25,59 @@
     "direction": "down",
     "description": "Margen General",
     "tooltip": "Porcentaje de rentabilidad bruta general tras costo de venta."
+  },
+  {
+    "id": "rotacion",
+    "label": "ROTACION",
+    "value": "4.7x",
+    "delta": "+0.3x",
+    "direction": "up",
+    "description": "Rotación de Inventario",
+    "tooltip": "Velocidad multiplicadora con la que el inventario disponible se vende y se renueva por completo."
+  },
+  {
+    "id": "comp-precio",
+    "label": "COMP-PRECIO",
+    "value": "ALERTA",
+    "delta": "-15 pts",
+    "direction": "down",
+    "description": "Competitividad",
+    "tooltip": "Brecha de precios frente al mercado; las alertas indican desalineaciones críticas con competidores."
+  },
+  {
+    "id": "stop-loss",
+    "label": "STOP-LOSS",
+    "value": "ACTIVADO",
+    "delta": "LÁCTEOS",
+    "direction": "up",
+    "description": "Límite de Pérdida",
+    "tooltip": "Regla de protección automática activa para forzar la salida física (vencimiento/merma) de un pasillo."
+  },
+  {
+    "id": "quincena",
+    "label": "QUINCENA",
+    "value": "BULL-MARKET",
+    "delta": "",
+    "direction": "up",
+    "description": "Fase Bull-Market",
+    "tooltip": "Inyección temporal de liquidez por cobros; clientes muestran alta disposición de compra y baja sensibilidad al precio."
+  },
+  {
+    "id": "post-quince",
+    "label": "POST-QUINCE",
+    "value": "BEAR",
+    "delta": "-22 pts",
+    "direction": "down",
+    "description": "Fase Bear",
+    "tooltip": "Periodo de contracción natural del consumo entre ciclos de pago, requiriendo mitigación de fricción comercial."
+  },
+  {
+    "id": "retailding",
+    "label": "RETAILDING",
+    "value": "TALLER",
+    "delta": "12 CUPOS",
+    "direction": "up",
+    "description": "Formación Académica",
+    "tooltip": "Estado de disponibilidad para talleres del framework cuantitativo híbrido de la plataforma."
   }
-  // ...añades el resto de KPIs que ya tienes en el ticker
 ]
