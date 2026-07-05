@@ -1,31 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+import Ticker from "../components/Ticker";
 
 const rawHtml = `
-
-    <div class="ticker">
-        <div class="ticker-track" id="ticker">
-            <div class="ticker-item"><span class="sym">TICKET-PROM</span><span class="up">Bs 48.20</span><span class="up">▲ 3.4%</span></div>
-            <div class="ticker-item"><span class="sym">DEMANDA-ARR</span><span class="up">120 u/día</span><span class="up">▲ 8.1%</span></div>
-            <div class="ticker-item"><span class="sym">MARGEN-GEN</span><span class="dn">18.2%</span><span class="dn">▼ 1.5%</span></div>
-            <div class="ticker-item"><span class="sym">ROTACION</span><span class="up">4.7x</span><span class="up">▲ 0.3</span></div>
-            <div class="ticker-item"><span class="sym">COMP-PRECIO</span><span class="dn">ALERTA</span><span class="dn">▼ 15%</span></div>
-            <div class="ticker-item"><span class="sym">STOP-LOSS</span><span class="up">ACTIVADO</span><span class="up">LÁCTEOS</span></div>
-            <div class="ticker-item"><span class="sym">QUINCENA</span><span class="up">BULL-MARKET</span><span class="up">↑↑</span></div>
-            <div class="ticker-item"><span class="sym">POST-QUINCE</span><span class="dn">BEAR</span><span class="dn">▼ 22%</span></div>
-            <div class="ticker-item"><span class="sym">RETAILDING</span><span class="up">TALLER</span><span class="up">12 CUPOS</span></div>
-            <div class="ticker-item"><span class="sym">TICKET-PROM</span><span class="up">Bs 48.20</span><span class="up">▲ 3.4%</span></div>
-            <div class="ticker-item"><span class="sym">DEMANDA-ARR</span><span class="up">120 u/día</span><span class="up">▲ 8.1%</span></div>
-            <div class="ticker-item"><span class="sym">MARGEN-GEN</span><span class="dn">18.2%</span><span class="dn">▼ 1.5%</span></div>
-            <div class="ticker-item"><span class="sym">ROTACION</span><span class="up">4.7x</span><span class="up">▲ 0.3</span></div>
-            <div class="ticker-item"><span class="sym">COMP-PRECIO</span><span class="dn">ALERTA</span><span class="dn">▼ 15%</span></div>
-            <div class="ticker-item"><span class="sym">STOP-LOSS</span><span class="up">ACTIVADO</span><span class="up">LÁCTEOS</span></div>
-            <div class="ticker-item"><span class="sym">QUINCENA</span><span class="up">BULL-MARKET</span><span class="up">↑↑</span></div>
-            <div class="ticker-item"><span class="sym">POST-QUINCE</span><span class="dn">BEAR</span><span class="dn">▼ 22%</span></div>
-            <div class="ticker-item"><span class="sym">RETAILDING</span><span class="up">TALLER</span><span class="up">12 CUPOS</span></div>
-        </div>
-    </div>
 
     <header class="border-b border-gray-800 bg-[#0e1424] sticky top-0 z-50 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="flex items-center gap-4">
@@ -500,5 +478,10 @@ export default function Page() {
     }
   }, []);
 
-  return <div dangerouslySetInnerHTML={{ __html: rawHtml }} />;
+  return (
+    <>
+      <Ticker />
+      <div dangerouslySetInnerHTML={{ __html: rawHtml }} />
+    </>
+  );
 }
