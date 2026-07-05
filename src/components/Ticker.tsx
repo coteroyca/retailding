@@ -2,22 +2,45 @@
 
 import { useEffect, useState } from "react";
 
+type Direction = "up" | "down" | "neutral";
+
 type TickerItem = {
   id: string;
   label: string;
   value: string;
   delta: string;
-  direction: "up" | "down";
+  direction?: Direction; // opcional, default: neutral
   description?: string;
   tooltip?: string;
 };
 
-function directionClass(direction: TickerItem["direction"]) {
-  return direction === "up" ? "up" : "dn";
+function getDirection(item: TickerItem): Direction {
+  // Si no hay direction en el JSON, asumimos "neutral"
+  return item.direction ?? "neutral";
 }
 
-function directionSymbol(direction: TickerItem["direction"]) {
-  return direction === "up" ? "▲" : "▼";
+function directionClass(direction: Direction) {
+  switch (direction) {
+    case "up":
+      return "up"; // clase verde (ya definida en tu CSS)
+    case "down":
+      return "dn"; // clase roja (ya definida en tu CSS)
+    case "neutral":
+    default:
+      return "text-white"; // color neutro/blanco
+  }
+}
+
+function directionSymbol(direction: Direction) {
+  switch (direction) {
+    case "up":
+      return "▲";
+    case "down":
+      return "▼";
+    case "neutral":
+    default:
+      return ""; // sin icono
+  }
 }
 
 export default function Ticker() {
@@ -46,23 +69,29 @@ export default function Ticker() {
   return (
     <div className="ticker">
       <div className="ticker-track" id="ticker">
-        {items.map((item) => (
-          <div key={item.id} className="ticker-item">
-            <span className="sym">{item.label}</span>
+        {items.map((item) => {
+          const direction = getDirection(item);
 
-            {/* Valor principal */}
-            <span className={directionClass(item.direction)}>
-              {item.value}
-            </span>
+          return (
+            <div key={item.id} className="ticker-item">
+              <span className="sym">{item.label}</span>
 
-            {/* Delta con símbolo ▲ / ▼ */}
-            {item.delta && (
-              <span className={directionClass(item.direction)}>
-                {directionSymbol(item.direction)} {item.delta}
+              {/* Valor principal */}
+              <span className={directionClass(direction)}>
+                {item.value}
               </span>
-            )}
-          </div>
-        ))}
+
+              {/* Delta con símbolo si:
+                  - delta no está vacío
+                  - y la dirección no es neutral */}
+              {item.delta && direction !== "neutral" && (
+                <span className={directionClass(direction)}>
+                  {directionSymbol(direction)} {item.delta}
+                </span>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
