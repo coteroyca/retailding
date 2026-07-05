@@ -12,3 +12,7 @@
 .dn {
   color: #ff3d5a; /* rojo (como en tu HTML original) */
 }
+
+.info {
+  color: cian; /* azul (porque es una INFO) */
+}
