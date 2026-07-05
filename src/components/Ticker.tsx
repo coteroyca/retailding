@@ -27,8 +27,9 @@ function directionClass(direction: Direction) {
     case "down":
       return "dn";      // clase roja (definida en tu CSS)
     case "neutral":
-    default:
       return "text-white"; // neutro/blanco
+    default:
+      return "text-info"; // neutro/blanco
   }
 }
 
