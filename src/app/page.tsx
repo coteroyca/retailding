@@ -466,6 +466,55 @@ const rawHtml = `
     </div>
 </div>
 
+
+
+
+<!-- MODAL COMPACTO PARA GLOSARIO DEL TICKER -->
+<div id="tickerGlossaryModal"
+     class="fixed inset-0 z-40 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200"
+     role="dialog"
+     aria-modal="true">
+  <div class="bg-141f30 border border-gray-800 rounded-xl w-full max-w-sm shadow-2xl flex flex-col max-h-[80vh] scale-95 transform transition-transform duration-200">
+    <!-- Encabezado -->
+    <div class="p-4 border-b border-gray-800/60 flex items-center justify-between">
+      <div>
+        <p id="tickerGlossaryCategory" class="text-10px uppercase tracking-widest text-blue-400"></p>
+        <h2 id="tickerGlossaryTitle" class="text-sm font-bold text-white"></h2>
+      </div>
+      <button type="button"
+              onclick="closeTickerGlossaryModal()"
+              class="text-gray-400 hover:text-white bg-gray-800/40 hover:bg-gray-800 px-2 py-1 rounded-md text-xs">
+        Cerrar
+      </button>
+    </div>
+    <!-- Cuerpo -->
+    <div class="p-4 overflow-y-auto custom-scrollbar text-xs space-y-3">
+      <div>
+        <p class="text-10px font-semibold text-gray-400 uppercase mb-1">Definición</p>
+        <p id="tickerGlossaryDefinition" class="text-gray-300 leading-relaxed"></p>
+      </div>
+      <div>
+        <p class="text-10px font-semibold text-gray-400 uppercase mb-1">Cómo leerlo en el ticker</p>
+        <p id="tickerGlossaryHowToRead" class="text-gray-300 leading-relaxed"></p>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mt-2">
+        <div class="bg-101626 border border-gray-800 rounded-lg p-2">
+          <p class="text-10px font-semibold text-gray-400 uppercase mb-1">Fórmula base</p>
+          <p id="tickerGlossaryFormula" class="font-mono text-c8d8e8 text-11px break-all"></p>
+        </div>
+        <div class="bg-101626 border border-gray-800 rounded-lg p-2">
+          <p class="text-10px font-semibold text-gray-400 uppercase mb-1">Horizonte</p>
+          <p id="tickerGlossaryTimeScope" class="text-gray-300 text-11px"></p>
+        </div>
+      </div>
+    </div>
+    <!-- Pie -->
+    <div class="p-3 bg-0e1622 border-t border-gray-800/40 text-10px text-gray-500 flex justify-between items-center">
+      <span class="font-mono uppercase tracking-wider">Glosario del Ticker</span>
+      <span class="text-gray-400">Haz clic en cualquier indicador para ver su ficha.</span>
+    </div>
+  </div>
+</div>
 	
 `;
 
