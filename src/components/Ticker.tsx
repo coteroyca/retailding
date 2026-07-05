@@ -3,34 +3,43 @@
 import { useEffect, useState } from "react";
 
 type Direction = "up" | "down" | "neutral";
+type Emphasis = "up" | "down" | "neutral";
 
 type TickerItem = {
   id: string;
   label: string;
   value: string;
-  delta: string;
-  direction?: Direction; // opcional, default: neutral
+  delta: string;        // texto del delta (p.ej. "12 CUPOS")
+  direction?: Direction; // controla icono ▲/▼ (opcional)
+  emphasis?: Emphasis;   // controla color (opcional)
   description?: string;
   tooltip?: string;
 };
 
+// Si no se especifica direction, asumimos "neutral" (sin icono)
 function getDirection(item: TickerItem): Direction {
-  // Si no hay direction en el JSON, asumimos "neutral"
   return item.direction ?? "neutral";
 }
 
-function directionClass(direction: Direction) {
-  switch (direction) {
+// Si no se especifica emphasis, asumimos "neutral" (blanco)
+function getEmphasis(item: TickerItem): Emphasis {
+  return item.emphasis ?? "neutral";
+}
+
+// Clase de color según emphasis
+function emphasisClass(emphasis: Emphasis) {
+  switch (emphasis) {
     case "up":
-      return "up"; // clase verde (ya definida en tu CSS)
+      return "up";      // clase verde (definida en tu CSS)
     case "down":
-      return "dn"; // clase roja (ya definida en tu CSS)
+      return "dn";      // clase roja
     case "neutral":
     default:
       return "text-white"; // color neutro/blanco
   }
 }
 
+// Símbolo según direction (para el delta, no para el valor)
 function directionSymbol(direction: Direction) {
   switch (direction) {
     case "up":
@@ -71,22 +80,26 @@ export default function Ticker() {
       <div className="ticker-track" id="ticker">
         {items.map((item) => {
           const direction = getDirection(item);
+          const emphasis = getEmphasis(item);
 
           return (
             <div key={item.id} className="ticker-item">
               <span className="sym">{item.label}</span>
 
-              {/* Valor principal */}
-              <span className={directionClass(direction)}>
+              {/* Valor principal: coloreado según emphasis */}
+              <span className={emphasisClass(emphasis)}>
                 {item.value}
               </span>
 
-              {/* Delta con símbolo si:
-                  - delta no está vacío
-                  - y la dirección no es neutral */}
-              {item.delta && direction !== "neutral" && (
-                <span className={directionClass(direction)}>
-                  {directionSymbol(direction)} {item.delta}
+              {/* Delta:
+                 - se muestra siempre que delta no esté vacío
+                 - usa el mismo color (emphasis)
+                 - añade símbolo solo si direction no es neutral */}
+              {item.delta && item.delta.trim() !== "" && (
+                <span className={emphasisClass(emphasis)}>
+                  {direction !== "neutral"
+                    ? `${directionSymbol(direction)} ${item.delta}`
+                    : item.delta}
                 </span>
               )}
             </div>
