@@ -16,7 +16,7 @@ type TickerItem = {
 
 // Si no hay direction en el JSON, asumimos "neutral"
 function getDirection(item: TickerItem): Direction {
-  return item.direction ?? "neutral";
+  return item.direction ?? "";
 }
 
 // Clase de color según direction
@@ -29,7 +29,7 @@ function directionClass(direction: Direction) {
     case "neutral":
       return "text-white"; // neutro/blanco
     default:
-      return "text-info"; // neutro/blanco
+      return "info"; // neutro/blanco
   }
 }
 
