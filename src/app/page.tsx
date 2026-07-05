@@ -486,13 +486,8 @@ const rawHtml = `
     </div>
 </div>
 
-
-
-
-
-
-
-    <script>
+	
+`;
         // Inicializar iconos de Lucide
         lucide.createIcons();
 
@@ -539,11 +534,14 @@ const rawHtml = `
             // Restaurar narrativa por defecto de la imagen
             narrativaTexto.innerHTML = `"La alta volatilidad se concentra en las categorías de Fruver y Lácteos durante los días viernes y sábado, impulsada por clientes Champions y Leales. El rango de demanda intra-día es 3.2 veces mayor al promedio histórico y el abandono de carrito aumentó un 18%. Se recomienda revisar disponibilidad en horas pico y ajustar promociones para estabilizar la demanda."`;
         });
-    </script>
-	
+    
 
 
-<script>	
+
+
+
+
+
 /**
  * =========================================================================
  * CONFIGURACIÓN DE DATOS REUTILIZABLES PARA DRILL-DOWN (MOCK DATA)
@@ -774,9 +772,6 @@ function closeDrillDownModal() {
 document.getElementById('drillDownModal').addEventListener('click', function(e) {
     if (e.target === this) closeDrillDownModal();
 });
-</script>
-	
-`;
 
 export default function Page() {
   return (
