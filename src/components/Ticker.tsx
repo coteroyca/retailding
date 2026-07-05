@@ -12,6 +12,14 @@ type TickerItem = {
   tooltip?: string;
 };
 
+function directionClass(direction: TickerItem["direction"]) {
+  return direction === "up" ? "up" : "dn";
+}
+
+function directionSymbol(direction: TickerItem["direction"]) {
+  return direction === "up" ? "▲" : "▼";
+}
+
 export default function Ticker() {
   const [items, setItems] = useState<TickerItem[]>([]);
 
@@ -33,10 +41,7 @@ export default function Ticker() {
     loadData();
   }, []);
 
-  if (!items.length) {
-    // Puedes mostrar un fallback o nada mientras carga
-    return null;
-  }
+  if (!items.length) return null;
 
   return (
     <div className="ticker">
@@ -44,12 +49,18 @@ export default function Ticker() {
         {items.map((item) => (
           <div key={item.id} className="ticker-item">
             <span className="sym">{item.label}</span>
-            <span className={item.direction === "up" ? "up" : "dn"}>
+
+            {/* Valor principal */}
+            <span className={directionClass(item.direction)}>
               {item.value}
             </span>
-            <span className={item.direction === "up" ? "up" : "dn"}>
-              {item.delta}
-            </span>
+
+            {/* Delta con símbolo ▲ / ▼ */}
+            {item.delta && (
+              <span className={directionClass(item.direction)}>
+                {directionSymbol(item.direction)} {item.delta}
+              </span>
+            )}
           </div>
         ))}
       </div>
