@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-type Direction = "up" | "down" | "neutral";
+type Direction = "up" | "down" | "neutral"| "info";
 
 type TickerItem = {
   id: string;
@@ -16,7 +16,7 @@ type TickerItem = {
 
 // Si no hay direction en el JSON, asumimos "neutral"
 function getDirection(item: TickerItem): Direction {
-  return item.direction ?? "";
+  return item.direction ?? "info";
 }
 
 // Clase de color según direction
@@ -28,6 +28,8 @@ function directionClass(direction: Direction) {
       return "dn";      // clase roja (definida en tu CSS)
     case "neutral":
       return "text-white"; // neutro/blanco
+    case "info":
+      return "info"; // neutro/blanco
     default:
       return "info"; // neutro/blanco
   }
