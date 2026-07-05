@@ -30,7 +30,7 @@ function directionClass(direction: Direction) {
       return "text-white"; // neutro/blanco
     case "info":
     default:
-      return "info"; // color cian
+      return "text-cyan-400"; // color cian
   }
 }
 
