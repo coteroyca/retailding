@@ -76,7 +76,7 @@
     "label": "RETAILDING",
     "value": "TALLER",
     "delta": "12 CUPOS",
-    "direction": "",
+    "direction": "info",
     "description": "Formación Académica",
     "tooltip": "Estado de disponibilidad para talleres del framework cuantitativo híbrido de la plataforma."
   }
