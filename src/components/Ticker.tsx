@@ -2,24 +2,19 @@
 
 import { useEffect, useState } from "react";
 
-type Direction = "up" | "down" | "neutral"| "info";
+type Direction = "up" | "down" | "neutral" | "info";
 
 type TickerItem = {
   id: string;
   label: string;
   value: string;
   delta: string;
-  direction?: Direction; // opcional, default: info
+  direction?: Direction;
   description?: string;
   tooltip?: string;
-  displayName?: string;
-  category?: string;
-  formula?: string;
-  timeScope?: string;
-  howToRead?: string;
 };
 
-// Si no hay direction en el JSON, asumimos "neutral"
+// Si no hay direction en el JSON, asumimos "info"
 function getDirection(item: TickerItem): Direction {
   return item.direction ?? "info";
 }
@@ -28,14 +23,14 @@ function getDirection(item: TickerItem): Direction {
 function directionClass(direction: Direction) {
   switch (direction) {
     case "up":
-      return "up";      // clase verde (definida en tu CSS)
+      return "up";
     case "down":
-      return "dn";      // clase roja (definida en tu CSS)
+      return "dn";
     case "neutral":
-      return "text-white"; // neutro/blanco
+      return "text-white";
     case "info":
     default:
-      return "text-yellow-300"; // color cian
+      return "text-yellow-300";
   }
 }
 
@@ -48,7 +43,7 @@ function directionSymbol(direction: Direction) {
       return "▼";
     case "neutral":
     default:
-      return ""; // sin icono
+      return "";
   }
 }
 
@@ -63,8 +58,49 @@ export default function Ticker() {
           console.error("Error al cargar ticker.json", res.status);
           return;
         }
-        const data = (await res.json()) as TickerItem[];
-        setItems(data);
+
+        const raw = await res.json();
+
+        // raw es el array que contiene tickerGlossary [file:240]
+        const glossary =
+          raw && Array.isArray(raw) ? raw[0]?.tickerGlossary : undefined;
+
+        if (!glossary) {
+          console.error("tickerGlossary no encontrado en ticker.json");
+          return;
+        }
+
+        // glossary es un objeto cuyas claves son TICKET-PROM, DEMANDA-ARR, etc. [file:240]
+        const mapped: TickerItem[] = Object.entries(glossary).map(
+          ([key, g]: [
+            string,
+            {
+              label?: string;
+              displayName?: string;
+              status?: string;
+              valueExample?: string;
+              deltaExample?: string;
+              definition?: string;
+              howToRead?: string;
+            }
+          ]) => {
+            let direction: Direction = "info";
+            if (g.status === "up") direction = "up";
+            else if (g.status === "dn") direction = "down";
+
+            return {
+              id: key,
+              label: g.label ?? key,
+              value: g.valueExample ?? "",
+              delta: g.deltaExample ?? "",
+              direction,
+              description: g.displayName,
+              tooltip: g.definition,
+            };
+          }
+        );
+
+        setItems(mapped);
       } catch (err) {
         console.error("Error de fetch en ticker.json", err);
       }
@@ -90,10 +126,7 @@ export default function Ticker() {
                 {item.value}
               </span>
 
-              {/* Delta:
-                 - se muestra si delta no está vacío
-                 - se colorea igual que el valor
-                 - añade símbolo solo si direction no es neutral */}
+              {/* Delta */}
               {item.delta && item.delta.trim() !== "" && (
                 <span className={directionClass(direction)}>
                   {direction !== "neutral"
