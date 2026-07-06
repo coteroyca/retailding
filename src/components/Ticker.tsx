@@ -9,7 +9,7 @@ type TickerItem = {
   label: string;
   value: string;
   delta: string;
-  direction?: Direction;
+  direction?: Direction; // opcional, default: info
   description?: string;
   tooltip?: string;
 };
@@ -23,9 +23,9 @@ function getDirection(item: TickerItem): Direction {
 function directionClass(direction: Direction) {
   switch (direction) {
     case "up":
-      return "up";
+      return "up"; // clase verde
     case "down":
-      return "dn";
+      return "dn"; // clase roja
     case "neutral":
       return "text-white";
     case "info":
@@ -62,19 +62,17 @@ export default function Ticker() {
         const raw = await res.json();
 
         // raw es el array que contiene tickerGlossary [file:240]
-        const glossary =
-          raw && Array.isArray(raw) ? raw[0]?.tickerGlossary : undefined;
+        const glossary = Array.isArray(raw) ? raw[0]?.tickerGlossary : undefined;
 
         if (!glossary) {
           console.error("tickerGlossary no encontrado en ticker.json");
           return;
         }
 
-        // glossary es un objeto cuyas claves son TICKET-PROM, DEMANDA-ARR, etc. [file:240]
+        // Tipado relajado para evitar el error de 'unknown'
         const mapped: TickerItem[] = Object.entries(glossary).map(
-          ([key, g]: [
-            string,
-            {
+          ([key, value]) => {
+            const g = value as {
               label?: string;
               displayName?: string;
               status?: string;
@@ -82,8 +80,8 @@ export default function Ticker() {
               deltaExample?: string;
               definition?: string;
               howToRead?: string;
-            }
-          ]) => {
+            };
+
             let direction: Direction = "info";
             if (g.status === "up") direction = "up";
             else if (g.status === "dn") direction = "down";
@@ -121,12 +119,10 @@ export default function Ticker() {
             <div key={item.id} className="ticker-item">
               <span className="sym">{item.label}</span>
 
-              {/* Valor principal */}
               <span className={directionClass(direction)}>
                 {item.value}
               </span>
 
-              {/* Delta */}
               {item.delta && item.delta.trim() !== "" && (
                 <span className={directionClass(direction)}>
                   {direction !== "neutral"
